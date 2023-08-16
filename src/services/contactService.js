@@ -22,3 +22,15 @@ export const GetUserContacts = async (key) => {
     }
 };
 
+export const GetUserContact = async (key, contactId) => {
+    const axiosInstance = instance(key);
+    
+    try {
+        const response = await axiosInstance.get(`/${contactId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to get user's contact. Please try again.")
+    }
+};
+
