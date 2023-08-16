@@ -1,0 +1,26 @@
+import axios from "axios";
+import { USER_URL } from "../constants/constants";
+
+
+const instance = (key) => axios.create({
+    baseURL : USER_URL,
+    timeout : 1000,
+    headers : {
+        "Content-Type" : "application/json",
+        "Authorization" : `Bearer ${key}`
+    }
+});
+
+
+export const GetUserProfile = async (key) => {
+    const axiosInstance = instance(key);
+
+    try {
+        const response = await axiosInstance.get("");
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to get user's profile. Please try again.")
+    }
+};
+
