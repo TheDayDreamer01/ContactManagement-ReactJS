@@ -57,3 +57,15 @@ export const UpdateUserContact = async (key, contactId, contactData) => {
         throw new Error("Failed to update user's contact. Please try again.")
     }
 };
+
+export const DeleteUserContact = async (key, contactId) => {
+    const axiosInstance = instance(key);
+
+    try {
+        const response = await axiosInstance.delete(`/${contactId}`);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to delete user's contact. Please try again.")
+    }
+};
