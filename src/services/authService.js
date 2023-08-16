@@ -18,3 +18,13 @@ export const SignUpService = async (userData) => {
         throw new Error("Failed to sign up. Please try again later.");
     }
 };
+
+export const SignInService = async (userData) => {
+    try {
+        const response = await instance.post("/signin", userData);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to sign in. Please check your credentials and try again.");
+    }
+};
