@@ -46,3 +46,14 @@ export const CreateUserContact = async (key, contactData) => {
     }
 };
 
+export const UpdateUserContact = async (key, contactId, contactData) => {
+    const axiosInstance = instance(key);
+
+    try {
+        const response = await axiosInstance.put(`/${contactId}`, contactData);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to update user's contact. Please try again.")
+    }
+};
