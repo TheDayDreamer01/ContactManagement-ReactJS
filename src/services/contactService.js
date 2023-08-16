@@ -34,3 +34,15 @@ export const GetUserContact = async (key, contactId) => {
     }
 };
 
+export const CreateUserContact = async (key, contactData) => {
+    const axiosInstance = instance(key);
+    
+    try {
+        const response = await axiosInstance.post("", contactData);
+        return response.data;
+    } catch (error) {   
+        console.log(error);
+        throw new Error("Failed to create user's contact. Please try again.")
+    }
+};
+
