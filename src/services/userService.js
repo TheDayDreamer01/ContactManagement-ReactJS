@@ -24,3 +24,14 @@ export const GetUserProfile = async (key) => {
     }
 };
 
+export const UpdateUserProfile = async (key, userData) => {
+    const axiosInstance = instance(key);
+
+    try {
+        const response = await axiosInstance.get("", userData);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to update user's profile. Please try again.")
+    }
+};
