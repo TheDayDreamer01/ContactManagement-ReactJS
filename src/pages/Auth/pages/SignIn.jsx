@@ -1,8 +1,9 @@
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
     return (
-        <>
+        <motion.div initial={{opacity : 0}} animate={{opacity : 1}}>
             <section className="flex flex-col space-y-4">
                 <div className="text-center">
                     <h1 className="text-3xl font-bold py-4 md:text-5xl">Sign In</h1>
@@ -19,7 +20,7 @@ const SignIn = () => {
                     <button className="h-12 bg-black text-white text-sm rounded-sm">Sign In</button>
                 </form>
             </section>
-        </>
+        </motion.div>
     );
 };
 
