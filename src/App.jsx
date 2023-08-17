@@ -1,18 +1,16 @@
 import { Route, Routes } from "react-router-dom";
-import Auth from "./pages/Auth";
+// import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
-import AuthRequired from "./components/authRequired";
+import AuthRequired from "./components/AuthRequired";
 
 const App = () => {
     return (
         <Routes>
-            <Route path="/" index element={ <Auth />} />
-        
+            {/* <Route path="/" index element={ <Auth />} /> */}
+            <Route path="/" element={<Dashboard />} />
             <Route element={<AuthRequired />}>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/profile" element={<Profile />} />
             </Route>
         </Routes>
     );
