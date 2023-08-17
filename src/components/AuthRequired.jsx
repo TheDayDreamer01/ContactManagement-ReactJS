@@ -11,7 +11,7 @@ const AuthRequired = () => {
 
     return (
         token === null ?    
-            <Navigate to="/signup"/> :
+            <Navigate to="/"/> :
             <Outlet />
     );
 };
