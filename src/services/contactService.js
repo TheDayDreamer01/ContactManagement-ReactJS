@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CONTACT_URL } from "../constants/constants.js";
+import { CONTACT_URL } from "../constants/serviceConstant.js";
 
 const instance = (key) => axios.create({
     baseURL: CONTACT_URL,

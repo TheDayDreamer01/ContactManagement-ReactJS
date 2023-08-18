@@ -1,5 +1,5 @@
 import axios from "axios";
-import { USER_URL } from "../constants/constants";
+import { USER_URL } from "../constants/serviceConstant.js";
 
 
 const instance = (key) => axios.create({

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AUTH_URL } from "../constants/constants.js";
+import { AUTH_URL } from "../constants/serviceConstant.js";
 
 const instance = axios.create({
     baseURL: AUTH_URL,
