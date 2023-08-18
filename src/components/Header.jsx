@@ -4,7 +4,8 @@ import { Context } from "../pages/Dashboard/Dashboard";
 
 const Header = () => {
 
-    const [isNavbar, setNavbar, isDark, setDark] = useContext(Context);
+    const [isNavbar, setNavbar, isDark, setDark,
+        isSearchBar, setSearchBar] = useContext(Context);
     
     return (
         <header className={`p-4 md:px-8 border-b border-zinc-900 dark:border-zinc-500 grid grid-cols-2 md:grid-cols-3 items-center ${isDark ? "dark:bg-zinc-800 dark:text-white" : ""}`}>
@@ -25,12 +26,16 @@ const Header = () => {
                     size={26}
                 />
             </div>
-            <button
-                className="justify-self-end"
-                onClick={() => setDark(!isDark)}
-            >
-                {isDark ? <BiSun size={26} /> : <BiMoon size={26} />}
-            </button>
+            <div className="justify-self-end flex items-center gap-6">
+                <button className="block md:hidden"
+                    onClick={() => setSearchBar(!isSearchBar)}>
+                    <BiSearch size={28} />
+                </button>
+                <button className="p-2 rounded-full bg-zinc-200"
+                    onClick={() => setDark(!isDark)}>
+                    {isDark ? <BiSun size={28} /> : <BiMoon size={26} />}
+                </button>
+            </div>
         </header>
     );
 };
