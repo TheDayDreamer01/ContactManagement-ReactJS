@@ -1,32 +1,39 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 
 const Auth = () => {
 
     const [register, setRegister] = useState(false);
+    const [isDark, setDark] = useState(false);
+
+    useEffect(() => {
+        setDark(localStorage.getItem("isDark") === "true")
+    }, [setDark]);
 
     return (
-        <div className="flex flex-col h-screen px-6 py-4 items-center">
-            <h1 className="text-2xl font-bold self-start md:text-3xl">Nexio</h1>
-            <div className="w-full max-w-sm">
-                <nav className="flex mt-6 mb-4">
-                    <button className={`border-b ${register ? "border-none text-stone-400" : "border-black"} w-full pb-4 text-sm`}
-                            onClick={() => setRegister(false)}>
-                        Sign Up
-                    </button>
-                    <button className={`border-b ${register ? "border-black" : "border-none text-stone-400"} w-full pb-4 text-sm`}
-                            onClick={() => setRegister(true)}>
-                        Sign In
-                    </button>
-                </nav>
+        <div className={`${isDark ? "dark" : ""}`}>
+            <div className="flex flex-col h-screen p-4 md:px-8 items-center dark:bg-zinc-800 dark:text-white">
+                <h1 className="text-3xl font-bold self-start">Nexio</h1>
+                <div className="w-full max-w-sm">
+                    <nav className="flex mt-6 mb-4"> 
+                        <button className={`border-b ${register ? "border-none text-zinc-400" : "border-zinc-900"} w-full pb-4 text-sm dark:border-zinc-500`}
+                                onClick={() => setRegister(false)}>
+                            Sign Up
+                        </button>
+                        <button className={`border-b ${register ? "border-zinc-900" : "border-none text-zinc-400"} w-full pb-4 text-sm dark:border-zinc-500`}
+                                onClick={() => setRegister(true)}>
+                            Sign In
+                        </button>
+                    </nav>
 
-                {register ? <SignIn /> : <SignUp />}
+                    {register ? <SignIn /> : <SignUp />}
+                </div>
+                
+                <div className="flex-grow"></div>
+                <p className="text-center text-xs py-4">© 2023 Nexio</p>
             </div>
-            
-            <div className="flex-grow"></div>
-            <p className="text-center text-xs py-4">© 2023 Nexio</p>
         </div>
     );
 };
