@@ -1,7 +1,9 @@
 const NotFound = () => {
     return (
         <>
-            <h1>NotFound</h1>
+           <main className="h-screen w-screen flex justify-center items-center">
+                <h1>Hello World</h1>
+           </main>
         </>
     );
 };
