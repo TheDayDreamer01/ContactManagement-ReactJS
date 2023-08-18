@@ -10,7 +10,7 @@ const Auth = () => {
     return (
         <div className="flex flex-col h-screen px-6 py-4 items-center">
             <h1 className="text-2xl font-bold self-start md:text-3xl">Nexio</h1>
-            <div className="w-full max-w-md">
+            <div className="w-full max-w-sm">
                 <nav className="flex mt-6 mb-4">
                     <button className={`border-b ${register ? "border-none text-stone-400" : "border-black"} w-full pb-4 text-sm`}
                             onClick={() => setRegister(false)}>
