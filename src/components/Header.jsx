@@ -28,11 +28,11 @@ const Header = () => {
                 />
             </div>
             <div className="justify-self-end flex items-center gap-6">
-                <button className="block md:hidden "
+                <button className="block md:hidden"
                     onClick={() => setSearchBar(!isSearchBar)}>
                     <BiSearch size={28} className="dark:text-white"/>
                 </button>
-                <button className="p-2 rounded-full dark:bg-neutral-700 bg-neutral-200"
+                <button className="p-2 rounded-full dark:bg-neutral-700 bg-neutral-100"
                     onClick={() => setDark(!isDark)}>
                     {isDark ? <BiSun size={28} className="dark:text-white"/> : <BiMoon size={26} />}
                 </button>
