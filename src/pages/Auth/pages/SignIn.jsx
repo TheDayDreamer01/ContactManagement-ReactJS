@@ -11,9 +11,9 @@ const SignIn = () => {
                 </div>
 
                 <form className="flex flex-col">    
-                    <label className="py-2 text-sm" htmlFor="email">Email</label>
+                    <label className="ml-2 py-2 text-sm" htmlFor="email">Email</label>
                     <input className="drop-shadow-md h-10 mb-3 px-2 rounded-md dark:bg-neutral-600" id="email" type="text" />
-                    <label className="py-2 text-sm" htmlFor="password">Password</label>
+                    <label className="ml-2 py-2 text-sm" htmlFor="password">Password</label>
                     <input className="drop-shadow-md h-10 mb-3 px-2 rounded-md dark:bg-neutral-600" id="password" type="password" />
 
                     <Link className="mb-10 self-end text-sm underline" path="/">Forgot Password?</Link>
