@@ -22,23 +22,23 @@ const Dashboard = () => {
             isNavbar, setNavbar, 
             isDark, setDark, 
             isSearchBar, setSearchBar]}>
-            <div className={`${isDark ? "dark" : ""} flex flex-col h-screen w-screen`}>
+            <div className={`${isDark ? "dark" : ""} relative flex flex-col h-screen w-screen`}>
                 <Header />
                 <main className="flex-grow flex">
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: isSearchBar ? 1 : 0 }}
                         exit={{ opacity: 0 }}
-                        className="absolute md:hidden h-16 bg-white w-full border-b border-black flex items-center p-4">
+                        className="absolute md:hidden h-16 bg-white w-full border-b border-neutral-900 flex items-center p-4 dark:bg-neutral-800">
                         <div className="md:block relative w-full">
-                            <BiSearch className="text-black absolute top-2 left-3" size={26} />
+                            <BiSearch className="text-black absolute top-2 left-3 dark:text-white " size={26} />
                             <input
-                                className="pl-10 pr-2 bg-zinc-100 w-full h-10 border border-black rounded-md"
+                                className="pl-10 pr-2 bg-neutral-100 w-full h-10 border border-neutral-900 rounded-md dark:bg-neutral-600"
                                 placeholder="Search Contact"
                             />
                         </div>
                         <button
-                            className="ml-2 rounded-md hover:bg-zinc-200"
+                            className="ml-2 rounded-md hover:bg-neutral-200 dark:text-white dark:hover:bg-neutral-700"
                             onClick={() => setSearchBar(!isSearchBar)}
                         >
                             <BiX size={40} />
@@ -53,11 +53,10 @@ const Dashboard = () => {
                         onClick={() => setNavbar(!isNavbar)}>
                     </motion.div>
 
-                    <nav className={`${isNavbar ? "translate-x-0" : "translate-x-[-100%]"} md:translate-x-0 bg-white w-72 absolute top-0 z-20 h-screen md:relative md:h-full transition-all ease border-r border-zinc-900 dark:border-zinc-500 dark:bg-zinc-800`}>
+                    <nav className={`${isNavbar ? "translate-x-0" : "translate-x-[-100%]"} md:translate-x-0 bg-white w-72 absolute top-0 z-20 h-screen md:relative md:h-full transition-all ease border-r border-neutral-900 dark:border-neutral-500 dark:bg-neutral-800`}>
                         <div className="flex flex-col h-full p-4">
-                            <button className="md:hidden self-end p-2 mb-4 hover:bg-zinc-200 rounded-lg" 
+                            <button className="md:hidden self-end p-2 mb-4 hover:bg-neutral-200 dark:hover:bg-neutral-700  dark:text-white rounded-lg" 
                                     onClick={() => setNavbar(!isNavbar)}>
-
                                 <BiX size={40}/>
                             </button>
                             <SideBarItem icon={<BiSolidContact size={24} />} title="Contacts" />
@@ -68,7 +67,7 @@ const Dashboard = () => {
                         </div>
                     </nav>
 
-                    <div className="flex-grow bg-zinc-100 dark:bg-zinc-700">
+                    <div className="flex-grow bg-neutral-100 dark:bg-neutral-700">
                     </div>
                 </main>
             </div>
@@ -80,7 +79,7 @@ const Dashboard = () => {
 // eslint-disable-next-line react/prop-types
 const SideBarItem = ({ icon, title }) => {
     return (
-        <button className="flex items-center gap-4 p-4 rounded-md bg-zinc-100 hover:bg-zinc-200 mb-2">
+        <button className="flex items-center gap-4 p-4 rounded-md  mb-2 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600 transition-colors ease-out">
             {icon}
             <p className="text-md leading-2 font-normal">{title}</p>
         </button>
