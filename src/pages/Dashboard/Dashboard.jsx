@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { BiSolidContact, BiLogOut, BiUser, BiX, BiSearch, BiErrorCircle} from "react-icons/bi";
 import { motion } from "framer-motion";
-import { BiSolidContact, BiLogOut, BiUser, BiX, BiSearch} from "react-icons/bi";
 import Header from "../../components/Header";
+import ModalBox from "../../components/ModalBox";
 
 export const Context = React.createContext();
 
 const Dashboard = () => {
     
+    const [isSignOut, setSignOut] = useState(false);
     const [isNavbar, setNavbar] = useState(false);
     const [isSearchBar, setSearchBar] = useState(false);
     const [isDark, setDark] = useState(
@@ -23,6 +25,9 @@ const Dashboard = () => {
             isDark, setDark, 
             isSearchBar, setSearchBar]}>
             <div className={`${isDark ? "dark" : ""} relative flex flex-col h-screen w-screen`}>
+                {isSignOut ? <ModalBox  icon={<BiErrorCircle size={80}/>}
+                                        title="Sign Out" message="Are you sure you want to sign out? You'll be missed!"
+                                        onCancel={() => setSignOut(false)} /> : null}
                 <Header />
                 <main className="flex-grow flex">
                     <motion.div
@@ -49,7 +54,7 @@ const Dashboard = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: isNavbar ? 1 : 0 }}
                         exit={{ opacity: 0 }}
-                        className={`${isNavbar ? "block" : "hidden"} md:hidden h-full w-full bg-[#0000006f] absolute top-0 left-0 z-10`}
+                        className={`${(isNavbar) ? "block" : "hidden"} md:hidden h-full w-full bg-[#0000006f] absolute top-0 left-0 z-10`}
                         onClick={() => setNavbar(!isNavbar)}>
                     </motion.div>
 
@@ -59,15 +64,18 @@ const Dashboard = () => {
                                     onClick={() => setNavbar(!isNavbar)}>
                                 <BiX size={40}/>
                             </button>
+
                             <SideBarItem icon={<BiSolidContact size={24} />} title="Contacts" />
                             <SideBarItem icon={<BiUser size={24} />} title="Profile" />
                             <div className="flex-grow"></div>
                             <SideBarItem icon={<BiLogOut size={24} />} 
-                                        title="Sign Out" />
+                                        title="Sign Out" itemOnClick={() => setSignOut(true)} />
                         </div>
                     </nav>
 
                     <div className="flex-grow bg-neutral-100 dark:bg-neutral-700">
+
+
                     </div>
                 </main>
             </div>
@@ -77,9 +85,9 @@ const Dashboard = () => {
 
 
 // eslint-disable-next-line react/prop-types
-const SideBarItem = ({ icon, title }) => {
+const SideBarItem = ({ icon, title, itemOnClick }) => {
     return (
-        <button className="flex items-center gap-4 p-4 rounded-md  mb-2 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600 transition-colors ease-out">
+        <button className="flex items-center gap-4 p-4 rounded-md  mb-2 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600 transition-colors ease-out" onClick={itemOnClick}>
             {icon}
             <p className="text-md leading-2 font-normal">{title}</p>
         </button>
