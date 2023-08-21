@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineIdcard } from "react-icons/ai";
+import { BsCardHeading } from "react-icons/bs";
 import { BiSolidContact, BiUser, BiLogOut } from "react-icons/bi";
 import { TbAlertHexagon } from "react-icons/tb";
 import { SideBar, SideBarItem } from "../../components/SideBar";
@@ -119,7 +119,7 @@ const Dashboard = () => {
                                     <ProfileContactCount contact={99}
                                                         favorite={99}
                                                         block={99}/>
-                                    <ProfileItem icon={<AiOutlineIdcard />} title="Username" data="WannaCry081" />                                            
+                                    <ProfileItem icon={<BsCardHeading />} title="Username" data="WannaCry081" />                                            
                                     <ProfileItem icon={<MdOutlineMailOutline />} title="Email" data="liraedata59@gmail.com" />                                            
                                 </ProfileHeader>
                             )}
