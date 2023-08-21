@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { SignUpService } from "../../../services/authService";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -22,14 +25,26 @@ const SignUp = () => {
     }));
   };
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = async (e) => {
     e.preventDefault();
     const errors = validateForm(formData);
     if (Object.keys(errors).length === 0) {
-      alert("Yehey");
-    } else {
-      setFormError(errors);
+      const response = await SignUpService(formData);
+
+      if (response.status === 200) {
+        sessionStorage.setItem("token", response.data);
+        navigate("/dashboard", { replace : true });
+
+      } else if (response.status === 409) {
+        errors.userName = "User already exists.";
+        errors.email = "User already exists.";
+      } else {
+        
+        // Navigate to Internal Server page
+        console.log("Internal server error.");
+      }
     }
+    setFormError(errors);
   };
 
   const validateForm = (data) => {
