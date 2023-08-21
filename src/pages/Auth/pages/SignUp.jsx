@@ -63,7 +63,7 @@ const SignUp = () => {
       errors.email = "Invalid email address.";
     }
 
-    if (data.password.trim() < 6) {
+    if (data.password.trim().length < 6) {
       errors.password = "Password must at least be 6 characters long.";
     }
 
@@ -183,7 +183,7 @@ const SignUp = () => {
             <input
               className={`${
                 formError.password && "border border-red-600 "
-              } shadow-md px-2 h-10 rounded-md  w-full dark:bg-neutral-700`}
+              } shadow-md pl-2 h-10 rounded-md pr-14 w-full dark:bg-neutral-700`}
               id="password"
               type={visible[0] ? "text" : "password"}
               name="password"
