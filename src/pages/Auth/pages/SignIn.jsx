@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { SignInService } from "../../../services/authService.js";
 
 const SignIn = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,14 +27,26 @@ const SignIn = () => {
     setVisible(!visible);
   };
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = async (e) => {
     e.preventDefault();
     const errors = validateForm(formData);
     if (Object.keys(errors).length === 0) {
-      alert("Yehey");
-    } else {
-      setFormError(errors);
-    }
+
+      const response = await SignInService(formData);
+      if (response.status === 200) {
+        sessionStorage.setItem("token", response.data);
+        navigate("/dashboard", { replace : true });
+
+      } else if (response.status === 401) {
+        errors.password = "Invalid user password.";
+      } else if (response.status === 404) {
+        errors.email = "User does not exists.";
+      } else {
+        // Navigate to Internal Server page
+        console.log("Internal server error.");
+      }
+    } 
+    setFormError(errors); 
   };
 
   const validateForm = (data) => {
