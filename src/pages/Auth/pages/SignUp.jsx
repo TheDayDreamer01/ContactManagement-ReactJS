@@ -96,7 +96,7 @@ const SignUp = () => {
           <div className="flex gap-4  md:gap-6">
             <span className="flex-grow">
               <label
-                className="text-neutral-600  py-2 text-sm block"
+                className="text-neutral-600 py-2 text-sm block dark:text-neutral-200"
                 htmlFor="first-name"
               >
                 First Name:
@@ -117,7 +117,7 @@ const SignUp = () => {
             </span>
             <span className="flex-grow">
               <label
-                className="text-neutral-600  py-2 text-sm block"
+                className="text-neutral-600 py-2 text-sm block dark:text-neutral-200"
                 htmlFor="last-name"
               >
                 Last Name:
@@ -138,7 +138,7 @@ const SignUp = () => {
             </span>
           </div>
           <label
-            className="text-neutral-600 mt-2 py-2 text-sm"
+            className="text-neutral-600 mt-2 py-2 text-sm dark:text-neutral-200"
             htmlFor="username"
           >
             Username:
@@ -155,12 +155,15 @@ const SignUp = () => {
           {formError.userName && (
             <p className="text-sm text-red-600">{formError.userName}</p>
           )}
-          <label className="text-neutral-600 mt-2 py-2 text-sm" htmlFor="email">
+          <label
+            className="text-neutral-600 mt-2 py-2 text-sm dark:text-neutral-200"
+            htmlFor="email"
+          >
             Email:
           </label>
           <input
             className={`${
-              formError.email && "border border-red-600 "
+              formError.email && "border border-red-600"
             } shadow-md px-2 h-10  rounded-md dark:bg-neutral-700`}
             id="email"
             type="text"
@@ -171,7 +174,7 @@ const SignUp = () => {
             <p className="text-sm text-red-600">{formError.email}</p>
           )}
           <label
-            className="text-neutral-600 mt-2 py-2 text-sm"
+            className="text-neutral-600 mt-2 py-2 text-sm dark:text-neutral-200"
             htmlFor="password"
           >
             Password:
@@ -197,7 +200,7 @@ const SignUp = () => {
             )}
           </div>
           <label
-            className="text-neutral-600 mt-2 py-2 text-sm"
+            className="text-neutral-600 mt-2 py-2 text-sm dark:text-neutral-200"
             htmlFor="confirm-password"
           >
             Confirm Password:
