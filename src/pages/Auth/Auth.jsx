@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { TbHexagon3D } from "react-icons/tb";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 
@@ -14,8 +15,11 @@ const Auth = () => {
 
     return (
         <div className={`${isDark ? "dark" : ""}`}>
-            <div className="flex flex-col h-screen p-4 md:px-8 items-center dark:bg-neutral-800 dark:text-white">
-                <h1 className="text-3xl font-bold self-start">Nexio</h1>
+            <div className="flex flex-col h-screen p-4 md:px-8 items-center dark:bg-neutral-900 dark:text-white">
+                <div className="self-start flex items-center">
+                    <TbHexagon3D size={40} className="mr-1"/>
+                    <h1 className="text-3xl font-bold">Nexio</h1>
+                </div>
                 <div className="w-full max-w-sm">
                     <nav className="flex mt-6 mb-4"> 
                         <button className={`border-b ${register ? "border-none text-neutral-500" : "border-neutral-900"} w-full pb-4 text-sm dark:border-neutral-500`}
