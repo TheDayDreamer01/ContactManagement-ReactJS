@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { TbHexagon3D } from "react-icons/tb";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 
 const Auth = () => {
+  const navigate = useNavigate();
   const [register, setRegister] = useState(false);
   const [isDark, setDark] = useState(false);
 
   useEffect(() => {
     setDark(localStorage.getItem("isDark") === "true");
-  }, [setDark]);
+    const isAuthenticated = sessionStorage.getItem("token");
+    if (isAuthenticated !== null) {
+      navigate("/dashboard", { replace: true });
+    } 
+  }, [setDark, navigate]);
 
   return (
     <div className={`${isDark ? "dark" : ""}`}>
@@ -38,7 +44,7 @@ const Auth = () => {
             </button>
           </nav>
 
-          {register ? <SignUp /> : <SignIn /> }
+          {register ? <SignUp /> : <SignIn />}
         </div>
 
         <div className="flex-grow"></div>
