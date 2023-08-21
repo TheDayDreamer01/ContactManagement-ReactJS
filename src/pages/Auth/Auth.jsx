@@ -26,7 +26,7 @@ const Auth = () => {
               } w-full pb-4 text-sm dark:border-neutral-600`}
               onClick={() => setRegister(false)}
             >
-              Sign Up
+              Sign In
             </button>
             <button
               className={`border-b ${
@@ -34,11 +34,11 @@ const Auth = () => {
               } w-full pb-4 text-sm dark:border-neutral-600`}
               onClick={() => setRegister(true)}
             >
-              Sign In
+              Sign Up
             </button>
           </nav>
 
-          {register ? <SignIn /> : <SignUp />}
+          {register ? <SignUp /> : <SignIn /> }
         </div>
 
         <div className="flex-grow"></div>
