@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   MdOutlineMailOutline,
   MdPhone,
@@ -24,13 +25,13 @@ const ContactDetail = ({ selectedContact, onPageChange }) => {
   }, [selectedContact]);
 
   return (
-    <>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <ProfileHeader
         firstName={userContact.firstName}
         lastName={userContact.lastName}
         onBack={onPageChange}
         onEdit={() => {}}
-        page={0}
+        buttonVisibility
       >
         <ProfileItem
           icon={<MdOutlineMailOutline size={24} />}
@@ -53,7 +54,7 @@ const ContactDetail = ({ selectedContact, onPageChange }) => {
           data={userContact.deliveryAddress}
         />
       </ProfileHeader>
-    </>
+    </motion.div>
   );
 };
 
