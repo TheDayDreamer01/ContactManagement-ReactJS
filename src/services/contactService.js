@@ -15,10 +15,9 @@ export const GetUserContacts = async (key) => {
 
     try {
         const response = await axiosInstance.get();
-        return response.data;
+        return response;
     } catch (error) {
-        console.log(error);
-        throw new Error("Failed to get user's contacts. Please try again.")
+        return error.response;
     }
 };
 
@@ -27,10 +26,9 @@ export const GetUserContact = async (key, contactId) => {
     
     try {
         const response = await axiosInstance.get(`/${contactId}`);
-        return response.data;
+        return response;
     } catch (error) {
-        console.log(error);
-        throw new Error("Failed to get user's contact. Please try again.")
+        return error.response;
     }
 };
 
@@ -39,10 +37,9 @@ export const CreateUserContact = async (key, contactData) => {
     
     try {
         const response = await axiosInstance.post("", contactData);
-        return response.data;
+        return response;
     } catch (error) {   
-        console.log(error);
-        throw new Error("Failed to create user's contact. Please try again.")
+        return error.response;
     }
 };
 
@@ -51,10 +48,9 @@ export const UpdateUserContact = async (key, contactId, contactData) => {
 
     try {
         const response = await axiosInstance.put(`/${contactId}`, contactData);
-        return response.data;
+        return response;
     } catch (error) {
-        console.log(error);
-        throw new Error("Failed to update user's contact. Please try again.")
+        return error.response;
     }
 };
 
@@ -63,9 +59,8 @@ export const DeleteUserContact = async (key, contactId) => {
 
     try {
         const response = await axiosInstance.delete(`/${contactId}`);
-        return response.data;
+        return response;
     } catch (error) {
-        console.log(error);
-        throw new Error("Failed to delete user's contact. Please try again.")
+        return error.response;
     }
 };
