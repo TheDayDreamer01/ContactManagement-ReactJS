@@ -26,9 +26,8 @@ const Profile = () => {
     <ProfileHeader
       firstName={userData.firstName}
       lastName={userData.lastName}
-      onBack={() => {}}
       onEdit={() => {}}
-      page={1}
+      buttonVisibility={false}
     >
       <ProfileContactCount contact={0} favorite={0} block={0} />
       <ProfileItem
