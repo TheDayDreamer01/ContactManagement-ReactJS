@@ -17,10 +17,9 @@ export const GetUserProfile = async (key) => {
 
     try {
         const response = await axiosInstance.get("");
-        return response.data;
+        return response;
     } catch (error) {
-        console.log(error);
-        throw new Error("Failed to get user's profile. Please try again.")
+        return error.response;
     }
 };
 
@@ -29,9 +28,8 @@ export const UpdateUserProfile = async (key, userData) => {
 
     try {
         const response = await axiosInstance.get("", userData);
-        return response.data;
+        return response;
     } catch (error) {
-        console.log(error);
-        throw new Error("Failed to update user's profile. Please try again.")
+        return error.response;
     }
 };
