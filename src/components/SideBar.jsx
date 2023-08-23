@@ -12,7 +12,7 @@ export const SideBar = ({ children }) => {
     <>
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: navBar ? 1 : 0 }}
+        animate={{ opacity: 1 }}
         className={`${
           navBar ? "block" : "hidden"
         } absolute h-screen w-screen bg-[#0000006f] top-0 z-10`}
