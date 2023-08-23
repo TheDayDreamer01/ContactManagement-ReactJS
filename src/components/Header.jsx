@@ -26,7 +26,7 @@ const Header = () => {
           />
         </div>
         <button
-          className="hidden p-2 shadow-md rounded-full transition-colors ease dark:text-neutral-400 bg-white md:block dark:bg-neutral-900"
+          className="hidden p-2 shadow-md rounded-full transition-colors ease dark:text-neutral-400 bg-white md:block dark:bg-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-700"
           onClick={() => setDark(!dark)}
         >
           {dark ? <BiSun size={24} /> : <BiMoon size={24} />}
