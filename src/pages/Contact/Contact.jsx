@@ -35,7 +35,7 @@ const Contact = ({ onSelectedContact }) => {
           ))}
         </>
       ) : (
-        <div className="h-full flex flex-col justify-center items-center p-4 gap-8">
+        <div className="relative top-20 h-full flex flex-col justify-center items-center p-4 gap-8">
           <img
             className="max-w-sm md:max-w-lg mx-auto"
             src={World}
