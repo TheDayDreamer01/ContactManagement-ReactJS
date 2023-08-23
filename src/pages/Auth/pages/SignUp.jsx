@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { SignUpService } from "../../../services/authService";
 
-const SignUp = () => {
+const SignUp = ({ onSetLoading }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -29,22 +30,27 @@ const SignUp = () => {
     e.preventDefault();
     const errors = validateForm(formData);
     if (Object.keys(errors).length === 0) {
-      const response = await SignUpService(formData);
+      onSetLoading();
 
-      if (response.status === 200) {
-        sessionStorage.setItem("token", response.data);
-        navigate("/dashboard", { replace : true });
+      try {
+        const response = await SignUpService(formData);
 
-      } else if (response.status === 409) {
-        errors.userName = "User already exists.";
-        errors.email = "User already exists.";
-      } else {
-        
-        // Navigate to Internal Server page
-        console.log("Internal server error.");
+        if (response.status === 200) {
+          sessionStorage.setItem("token", response.data);
+          onSetLoading();
+          navigate("/dashboard", { replace: true });
+        } else if (response.status === 409) {
+          errors.userName = "User already exists.";
+        } else {
+          onSetLoading();
+          navigate("/error");
+        }
+      } catch (error) {
+        console.log(error);
       }
     }
     setFormError(errors);
+    onSetLoading();
   };
 
   const validateForm = (data) => {
@@ -119,12 +125,13 @@ const SignUp = () => {
               <input
                 className={`${
                   formError.firstName && "border border-red-600 "
-                } shadow-md px-2 h-10 w-full rounded-md dark:bg-neutral-700`}
+                } shadow-md px-3 h-10 w-full rounded-md dark:bg-neutral-600`}
                 id="first-name"
                 type="text"
                 value={formData.firstName}
                 name="firstName"
                 onChange={setFormValue}
+                placeholder="John"
               />
               {formError.firstName && (
                 <p className="text-sm text-red-600">{formError.firstName}</p>
@@ -140,10 +147,11 @@ const SignUp = () => {
               <input
                 className={`${
                   formError.lastName && "border border-red-600 "
-                } shadow-md px-2 h-10 w-full rounded-md dark:bg-neutral-700`}
+                } shadow-md px-3 h-10 w-full rounded-md dark:bg-neutral-600`}
                 id="last-name"
                 type="text"
                 name="lastName"
+                placeholder="Doe"
                 onChange={setFormValue}
               />
 
@@ -161,10 +169,11 @@ const SignUp = () => {
           <input
             className={`${
               formError.userName && "border border-red-600 "
-            } shadow-md px-2 h-10  rounded-md dark:bg-neutral-700`}
+            } shadow-md px-3 h-10  rounded-md dark:bg-neutral-600`}
             id="username"
             type="text"
             name="userName"
+            placeholder="JohnDoe12"
             onChange={setFormValue}
           />
           {formError.userName && (
@@ -179,10 +188,11 @@ const SignUp = () => {
           <input
             className={`${
               formError.email && "border border-red-600"
-            } shadow-md px-2 h-10  rounded-md dark:bg-neutral-700`}
+            } shadow-md px-3 h-10  rounded-md dark:bg-neutral-600`}
             id="email"
             type="text"
             name="email"
+            placeholder="example@example.com"
             onChange={setFormValue}
           />
           {formError.email && (
@@ -198,14 +208,15 @@ const SignUp = () => {
             <input
               className={`${
                 formError.password && "border border-red-600 "
-              } shadow-md pl-2 h-10 rounded-md pr-14 w-full dark:bg-neutral-700`}
+              } shadow-md pl-3 h-10 rounded-md pr-14 w-full dark:bg-neutral-600`}
               id="password"
               type={visible[0] ? "text" : "password"}
               name="password"
+              placeholder="Password"
               onChange={setFormValue}
             />
             <button
-              className="absolute right-4 top-2"
+              className="absolute right-4 top-2 text-neutral-400"
               onClick={(e) => showPassword(e, 0)}
             >
               {visible[0] ? <FiEyeOff size={24} /> : <FiEye size={24} />}
@@ -224,15 +235,16 @@ const SignUp = () => {
             <input
               className={`${
                 formError.confirmPassword && "border border-red-600 "
-              } w-full shadow-md pl-2 pr-14 h-10 rounded-md dark:bg-neutral-700`}
+              } w-full shadow-md pl-3 pr-14 h-10 rounded-md dark:bg-neutral-600`}
               id="confirm-password"
               type={visible[1] ? "text" : "password"}
               name="confirmPassword"
+              placeholder="Confirm Password"
               onChange={setFormValue}
             />
 
             <button
-              className="absolute right-4 top-2"
+              className="absolute right-4 top-2 text-neutral-400"
               onClick={(e) => showPassword(e, 1)}
             >
               {visible[1] ? <FiEyeOff size={24} /> : <FiEye size={24} />}

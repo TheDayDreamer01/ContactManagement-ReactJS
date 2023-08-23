@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -5,7 +6,7 @@ import { Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { SignInService } from "../../../services/authService.js";
 
-const SignIn = () => {
+const SignIn = ({ onSetLoading }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -29,24 +30,33 @@ const SignIn = () => {
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
+
     const errors = validateForm(formData);
     if (Object.keys(errors).length === 0) {
+      onSetLoading();
 
-      const response = await SignInService(formData);
-      if (response.status === 200) {
-        sessionStorage.setItem("token", response.data);
-        navigate("/dashboard", { replace : true });
+      try {
+        const response = await SignInService(formData);
 
-      } else if (response.status === 401) {
-        errors.password = "Invalid user password.";
-      } else if (response.status === 404) {
-        errors.email = "User does not exists.";
-      } else {
-        // Navigate to Internal Server page
-        console.log("Internal server error.");
+        if (response.status === 200) {
+          sessionStorage.setItem("token", response.data);
+          onSetLoading();
+          navigate("/dashboard", { replace: true });
+        } else if (response.status === 401) {
+          errors.password = "Invalid user password.";
+        } else if (response.status === 404) {
+          errors.email = "User does not exists.";
+        } else {
+          onSetLoading();
+          navigate("/error");
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } 
-    setFormError(errors); 
+    }
+
+    setFormError(errors);
+    onSetLoading();
   };
 
   const validateForm = (data) => {
@@ -86,7 +96,7 @@ const SignIn = () => {
           <input
             className={`${
               formError.email && "border border-red-500"
-            } drop-shadow-md h-10 px-2 rounded-md dark:bg-neutral-700`}
+            } drop-shadow-md h-10 px-3 rounded-md dark:bg-neutral-600`}
             id="email"
             type="text"
             name="email"
@@ -106,13 +116,16 @@ const SignIn = () => {
             <input
               className={`${
                 formError.password && "border border-red-500"
-              } w-full drop-shadow-md h-10 pl-2 pr-14 rounded-md dark:bg-neutral-700`}
+              } w-full drop-shadow-md h-10 pl-3 pr-14 rounded-md dark:bg-neutral-600`}
               id="password"
               type={visible ? "text" : "password"}
               name="password"
               onChange={setFormValue}
             />
-            <button className="absolute right-4 top-2" onClick={showPassword}>
+            <button
+              className="absolute right-4 top-2 text-neutral-400"
+              onClick={showPassword}
+            >
               {visible ? <FiEyeOff size={24} /> : <FiEye size={24} />}
             </button>
           </div>
@@ -123,7 +136,7 @@ const SignIn = () => {
           <Link className="mt-4 mb-8 self-end text-sm underline" path="/">
             Forgot Password?
           </Link>
-          <button className="h-12 bg-neutral-800 text-white text-sm rounded-md dark:bg-neutral-900">
+          <button className="h-12 bg-neutral-800 text-white text-sm rounded-md transition-colors ease hover:bg-neutral-600 dark:bg-neutral-900 dark:hover:bg-neutral-700">
             Sign In
           </button>
         </form>
