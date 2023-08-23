@@ -10,15 +10,19 @@ import {
 import { GetUserContact } from "../../services/contactService.js";
 import { ProfileHeader, ProfileItem } from "../../components/ProfileItems.jsx";
 
-const ContactDetail = ({ selectedContact, onPageChange }) => {
+const ContactDetail = ({ selectedContact, onPageChange, onEditContact }) => {
   const [userContact, setUserContact] = useState({});
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
 
     const getUserContact = async () => {
-      const response = await GetUserContact(token, selectedContact);
-      setUserContact(response.data);
+      try {
+        const response = await GetUserContact(token, selectedContact);
+        setUserContact(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     getUserContact();
@@ -30,7 +34,7 @@ const ContactDetail = ({ selectedContact, onPageChange }) => {
         firstName={userContact.firstName}
         lastName={userContact.lastName}
         onBack={onPageChange}
-        onEdit={() => {}}
+        onEdit={onEditContact}
         buttonVisibility
       >
         <ProfileItem

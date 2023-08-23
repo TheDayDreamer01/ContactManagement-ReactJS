@@ -22,7 +22,7 @@ export const SideBar = ({ children }) => {
       <nav
         className={`${
           navBar ? "translate-x-0" : "-translate-x-full"
-        } absolute top-0 left-0 h-screen w-72 bg-neutral-800 z-20 transition-all ease shadow-md md:relative md:translate-x-[100] dark:bg-neutral-900`}
+        } absolute top-0 left-0 h-screen w-72 bg-neutral-800 z-20 transition-all ease shadow-md md:relative md:translate-x-[100] dark:bg-neutral-900 lg:z-10`}
       >
         <div className="h-full flex flex-col text-white items-start p-4 md:px-8">
           <div className="w-full mb-4 space-y-4">

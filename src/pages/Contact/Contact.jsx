@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { ContactItem } from "../../components/ContactItems";
+import { ContactHeader, ContactItem } from "../../components/ContactItems";
 import { GetUserContacts } from "../../services/contactService.js";
 import World from "../../assets/svg/World.svg";
 
@@ -11,8 +11,15 @@ const Contact = ({ onSelectedContact }) => {
     const token = sessionStorage.getItem("token");
 
     const getUserContactsAPI = async () => {
-      const response = await GetUserContacts(token);
-      setContactData(response.data);
+      try {
+        const response = await GetUserContacts(token);
+        if (response.status === 200){
+          setContactData(response.data);
+        }
+    
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     getUserContactsAPI();
@@ -20,7 +27,8 @@ const Contact = ({ onSelectedContact }) => {
 
   return (
     <>
-      {contactData ? (
+      <ContactHeader />
+      {contactData.length != 0 ? (
         <>
           {contactData.map((element, index) => (
             <ContactItem
@@ -29,7 +37,8 @@ const Contact = ({ onSelectedContact }) => {
               lastName={element.lastName}
               phone={element.phoneNo}
               email={element.email}
-              date="10/10/2023"
+              date={`
+              ${element.createdAt.substring(5, 7)}-${element.createdAt.substring(8, 10)}-${element.createdAt.substring(0, 4)}`}
               onContactView={() => onSelectedContact(element.id)}
             />
           ))}

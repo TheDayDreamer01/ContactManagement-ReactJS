@@ -9,6 +9,13 @@ export const ProfileHeader = ({
   onEdit,
   buttonVisibility,
 }) => {
+
+  let name;
+  
+  if (firstName !== undefined || lastName !== undefined){
+    name = firstName[0].toUpperCase() + lastName[0].toUpperCase();
+  }
+
   return (
     <div className="overflow-y-scroll h-full">
       <div className="w-full h-48 bg-neutral-800 rounded-t-lg relative flex justify-center dark:bg-neutral-900">
@@ -25,15 +32,14 @@ export const ProfileHeader = ({
           </button>
         </div>
 
-        <div className="absolute -bottom-10 min-w-[4.5rem] min-h-[4.5rem] bg-neutral-300 rounded-lg flex justify-center items-center dark:bg-neutral-800 ">
+        <div className="absolute -bottom-10 min-w-[4.5rem] min-h-[4.5rem] bg-neutral-300 rounded-lg flex justify-center items-center dark:bg-neutral-800">
           <h1 className="text-neutral-600 font-bold text-2xl dark:text-neutral-200">
-            {/* {firstName[0].toUpperCase()}
-            {lastName[0].toUpperCase()} */}
+              {name}
           </h1>
         </div>
       </div>
       <div className="flex justify-center items-end h-20">
-        <h2 className="text-xl dark:text-white">
+        <h2 className="text-xl dark:text-white truncate text-center">
           {firstName} {lastName}
         </h2>
       </div>

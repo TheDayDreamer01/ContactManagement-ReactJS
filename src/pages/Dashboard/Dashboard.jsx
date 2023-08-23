@@ -19,12 +19,14 @@ export const Context = React.createContext();
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  const [navBar, setNavBar] = useState(false);
   const [dark, setDark] = useState(localStorage.getItem("isDark") === "true");
-  const [selectedContact, setSelectedContact] = useState(0);
-  const [page, setPage] = useState(0);
-  const [signOut, setSignOut] = useState(false);
+  const [navBar, setNavBar] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  
   const [addContact, setAddContact] = useState(false);
+  const [editContact, setEditContact] = useState(false);
+
+  const [selectedContact, setSelectedContact] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("isDark", dark);
@@ -35,51 +37,59 @@ const Dashboard = () => {
     }
   }, [dark, navigate]);
 
-  const onAcceptSignOut = () => {
-    sessionStorage.clear();
-    navigate("/", { replace: true });
-  };
-  const onCancelSignOut = () => {
-    setSignOut(false);
-    setNavBar(false);
-  };
   const onPageChange = (pageNumber) => {
-    setPage(pageNumber);
+    setCurrentPage(pageNumber);
     setNavBar(false);
   };
 
   const onSelectedContact = (value) => setSelectedContact(value);
   const onAddContact = () => setAddContact(!addContact);
+  const onEditContact = () => setEditContact(!editContact);
+
+  const [showModal, setShowModal] = useState(false);
+  const onAcceptSignOut = () => {
+    sessionStorage.clear();
+    navigate("/", { replace: true });
+  };
+  const onCancelSignOut = () => {
+    setShowModal(false);
+    setNavBar(false);
+  };
 
   return (
-    <Context.Provider
-      value={[navBar, setNavBar, dark, setDark, addContact, setAddContact]}
-    >
+    <Context.Provider value={[navBar, setNavBar, dark, setDark]}>
       <div className={`${dark && "dark"} w-screen h-screen flex`}>
-        {signOut && (
+        {showModal && (
           <ModalBox
             icon={<TbAlertHexagon size={80} />}
             title="Sign Out"
             message="Are you sure you want to sign out? you'll be missed!"
-            onCancelValue={signOut}
+            onCancelValue={showModal}
             onAccept={onAcceptSignOut}
             onCancel={onCancelSignOut}
           />
         )}
 
         <ContactForm addContact={addContact} onAddContact={onAddContact} />
+        <ContactForm
+          contactId={selectedContact}
+          addContact={editContact}
+          onAddContact={onEditContact}
+          onPageChange={() => onSelectedContact(null)}
+          isEdit
+        />
 
         <SideBar>
           <SideBarItem
             icon={<BiSolidContact size={24} />}
             title="Contacts"
-            isActive={page == 0}
+            isActive={currentPage == 0}
             onPageChange={() => onPageChange(0)}
           />
           <SideBarItem
             icon={<BiUser size={24} />}
             title="Profile"
-            isActive={page == 1}
+            isActive={currentPage == 1}
             onPageChange={() => onPageChange(1)}
           />
           <div className="flex-grow"></div>
@@ -87,7 +97,7 @@ const Dashboard = () => {
             icon={<BiLogOut size={24} />}
             title="Sign Out"
             isActive
-            onPageChange={() => setSignOut(true)}
+            onPageChange={() => setShowModal(true)}
           />
         </SideBar>
 
@@ -96,26 +106,26 @@ const Dashboard = () => {
           <section className="p-4 flex-grow flex md:px-8 gap-8 overflow-hidden transition-colors ease dark:bg-neutral-800">
             <div
               className={`${
-                (selectedContact != 0 || page == 1) && "hidden"
+                (selectedContact !== null || currentPage == 1) && "hidden"
               }  h-full w-full rounded-lg shadow-md p-4 bg-white lg:block lg:w-1/2 xl:w-full dark:bg-neutral-700 relative`}
             >
               <div
-                className={`${page != 0 && "hidden"} absolute bottom-6 right-6`}
+                className={`${currentPage != 0 && "hidden"} absolute bottom-6 right-6`}
               >
                 <button
-                  className="h-14 w-14 rounded-full z-10 bg-neutral-600 shadow-lg flex justify-center items-center text-white dark:bg-neutral-900"
+                  className="h-14 w-14 rounded-full z-10 bg-neutral-800 shadow-lg flex justify-center items-center text-white hover:bg-neutral-600 dark:bg-neutral-900 dark:hover:bg-neutral-800 transition-colors ease-out"
                   onClick={onAddContact}
                 >
                   <BiPlus size={24} />
                 </button>
               </div>
               <div className="overflow-y-scroll h-full">
-                {page == 0 && (
+                {currentPage == 0 && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                     <Contact onSelectedContact={onSelectedContact} />
                   </motion.div>
                 )}
-                {page == 1 && (
+                {currentPage == 1 && (
                   <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                     <Activity />
                   </motion.div>
@@ -124,16 +134,17 @@ const Dashboard = () => {
             </div>
             <div
               className={`${
-                selectedContact != 0 || page == 1
+                selectedContact !== null || currentPage == 1
                   ? "block w-full"
                   : "hidden w-2/4"
-              } p-4 h-full rounded-lg shadow-md bg-white lg:max-w-[30rem] lg:w-1/2 lg:block dark:bg-neutral-700`}
+              } p-4 h-full rounded-lg shadow-md bg-white lg:max-w-[30rem] lg:w-1/2 lg:block dark:bg-neutral-700 overflow-y-scroll`}
             >
-              {page == 0 &&
-                (selectedContact != 0 ? (
+              {currentPage == 0 &&
+                (selectedContact !== null ? (
                   <ContactDetail
+                    onEditContact={onEditContact}
                     selectedContact={selectedContact}
-                    onPageChange={() => onSelectedContact(0)}
+                    onPageChange={() => onSelectedContact(null)}
                   />
                 ) : (
                   <motion.div
@@ -152,7 +163,7 @@ const Dashboard = () => {
                   </motion.div>
                 ))}
 
-              {page == 1 && <Profile />}
+              {currentPage == 1 && <Profile />}
             </div>
           </section>
         </main>

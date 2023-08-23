@@ -39,10 +39,27 @@ export const ContactItem = ({
   );
 };
 
-export const ContactHeader = ({ title }) => {
+// export const ContactHeader = ({ title }) => {
+//   return (
+//     <div className="w-full rounded-md bg-neutral-800 mt-2 dark:bg-neutral-900">
+//       <p className="p-1 ml-4 font-semibold text-white">{title}</p>
+//     </div>
+//   );
+// };
+
+export const ContactHeader = () => {
   return (
-    <div className="w-full rounded-md bg-neutral-800 mt-2 dark:bg-neutral-900">
-      <p className="p-1 ml-4 font-semibold text-white">{title}</p>
+    <div className="p-4 w-full text-start rounded-md my-1 bg-neutral-800 text-white font-semibold dark:bg-neutral-900 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 place-content-between w-full place-items-center text-md dark:text-neutral-200">
+        <div className="place-self-start max-w-[18rem] lg:max-w-[8rem]">
+          <h1 className="font-medium truncate ">
+            Contact Person
+          </h1>
+        </div>
+        <p className="hidden xl:block">Email Address</p>
+        <p className="hidden 2xl:xl:block">Phone No.</p>
+        <p className="hidden xl:block">Date</p>
+      </div>
     </div>
   );
 };
