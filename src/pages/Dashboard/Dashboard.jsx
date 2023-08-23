@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { BiSolidContact, BiUser, BiLogOut } from "react-icons/bi";
+import { BiSolidContact, BiUser, BiLogOut, BiPlus } from "react-icons/bi";
 import { TbAlertHexagon } from "react-icons/tb";
 import Header from "../../components/Header";
 import ModalBox from "../../components/ModalBox";
@@ -12,6 +12,7 @@ import Profile from "../Profile/Profile";
 import ContactDetail from "../ContactDetail";
 import { SideBar, SideBarItem } from "../../components/SideBar";
 import Device from "../../assets/svg/Device.svg";
+import ContactForm from "../ContactForm/ContactForm";
 
 export const Context = React.createContext();
 
@@ -23,6 +24,7 @@ const Dashboard = () => {
   const [selectedContact, setSelectedContact] = useState(0);
   const [page, setPage] = useState(0);
   const [signOut, setSignOut] = useState(false);
+  const [addContact, setAddContact] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("isDark", dark);
@@ -45,10 +47,14 @@ const Dashboard = () => {
     setPage(pageNumber);
     setNavBar(false);
   };
+
   const onSelectedContact = (value) => setSelectedContact(value);
+  const onAddContact = () => setAddContact(!addContact);
 
   return (
-    <Context.Provider value={[navBar, setNavBar, dark, setDark]}>
+    <Context.Provider
+      value={[navBar, setNavBar, dark, setDark, addContact, setAddContact]}
+    >
       <div className={`${dark && "dark"} w-screen h-screen flex`}>
         {signOut && (
           <ModalBox
@@ -60,6 +66,9 @@ const Dashboard = () => {
             onCancel={onCancelSignOut}
           />
         )}
+
+        <ContactForm addContact={addContact} onAddContact={onAddContact} />
+
         <SideBar>
           <SideBarItem
             icon={<BiSolidContact size={24} />}
@@ -88,18 +97,30 @@ const Dashboard = () => {
             <div
               className={`${
                 (selectedContact != 0 || page == 1) && "hidden"
-              }  h-full w-full rounded-lg shadow-md p-4 bg-white overflow-y-scroll lg:block lg:w-1/2 xl:w-full dark:bg-neutral-700`}
+              }  h-full w-full rounded-lg shadow-md p-4 bg-white lg:block lg:w-1/2 xl:w-full dark:bg-neutral-700 relative`}
             >
-              {page == 0 && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  <Contact onSelectedContact={onSelectedContact} />
-                </motion.div>
-              )}
-              {page == 1 && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                  <Activity />
-                </motion.div>
-              )}
+              <div
+                className={`${page != 0 && "hidden"} absolute bottom-6 right-6`}
+              >
+                <button
+                  className="h-14 w-14 rounded-full z-10 bg-neutral-600 shadow-lg flex justify-center items-center text-white dark:bg-neutral-900"
+                  onClick={onAddContact}
+                >
+                  <BiPlus size={24} />
+                </button>
+              </div>
+              <div className="overflow-y-scroll h-full">
+                {page == 0 && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <Contact onSelectedContact={onSelectedContact} />
+                  </motion.div>
+                )}
+                {page == 1 && (
+                  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <Activity />
+                  </motion.div>
+                )}
+              </div>
             </div>
             <div
               className={`${
