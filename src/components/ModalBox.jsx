@@ -6,13 +6,12 @@ const ModalBox = ({
   title,
   message,
   onAccept,
-  onCancelValue,
   onCancel,
 }) => {
   return (
     <motion.section
       initial={{ opacity: 0 }}
-      animate={{ opacity: onCancelValue ? 1 : 0 }}
+      animate={{ opacity:  1 }}
       className="absolute bg-[#0000006f] h-screen w-screen z-40"
       onClick={onCancel}
     >
