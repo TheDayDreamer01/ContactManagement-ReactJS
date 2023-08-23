@@ -19,7 +19,7 @@ export const ActivityItem = () => {
 
 export const ActivityHeader = () => {
   return (
-    <div className="p-4 w-full text-start rounded-md my-1 bg-neutral-900 text-white font-semibold">
+    <div className="p-4 w-full text-start rounded-md my-1 bg-neutral-800 text-white font-semibold dark:bg-neutral-900 ">
       <div className="grid grid-cols-3 xl:grid-cols-6">
         <h1 className="hidden xl:block">Status</h1>
         <p className="col-span-2 max-w-[38rem] xl:col-span-4">Description</p>
