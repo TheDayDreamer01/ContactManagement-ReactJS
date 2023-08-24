@@ -3,7 +3,6 @@ import { AUTH_URL } from "../constants/serviceConstant.js";
 
 const instance = axios.create({
     baseURL: AUTH_URL,
-    timeout: 1000,
     headers: {
         "Content-Type": "application/json",
     },

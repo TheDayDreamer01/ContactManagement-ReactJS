@@ -3,7 +3,6 @@ import { CONTACT_URL } from "../constants/serviceConstant.js";
 
 const instance = (key) => axios.create({
     baseURL: CONTACT_URL,
-    timeout: 1000,
     headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${key}`
