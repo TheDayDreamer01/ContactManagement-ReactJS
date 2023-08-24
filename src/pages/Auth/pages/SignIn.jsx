@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { SignInService } from "../../../services/authService.js";
 
-const SignIn = ({ onSetLoading }) => {
+const SignIn = ({ setLoading }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -33,30 +33,28 @@ const SignIn = ({ onSetLoading }) => {
 
     const errors = validateForm(formData);
     if (Object.keys(errors).length === 0) {
-      onSetLoading();
-
+      setLoading(true);
       try {
         const response = await SignInService(formData);
 
         if (response.status === 200) {
           sessionStorage.setItem("token", response.data);
-          onSetLoading();
+          setLoading(false)
           navigate("/dashboard", { replace: true });
         } else if (response.status === 401) {
           errors.password = "Invalid user password.";
         } else if (response.status === 404) {
           errors.email = "User does not exists.";
         } else {
-          onSetLoading();
+          setLoading(false);
           navigate("/error");
         }
       } catch (error) {
         console.log(error);
       }
     }
-
+    setLoading(false);
     setFormError(errors);
-    onSetLoading();
   };
 
   const validateForm = (data) => {

@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { SignUpService } from "../../../services/authService";
 
-const SignUp = ({ onSetLoading }) => {
+const SignUp = ({ setLoading }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
@@ -30,27 +30,27 @@ const SignUp = ({ onSetLoading }) => {
     e.preventDefault();
     const errors = validateForm(formData);
     if (Object.keys(errors).length === 0) {
-      onSetLoading();
+      setLoading(true);
 
       try {
         const response = await SignUpService(formData);
 
         if (response.status === 200) {
           sessionStorage.setItem("token", response.data);
-          onSetLoading();
+          setLoading(false);
           navigate("/dashboard", { replace: true });
         } else if (response.status === 409) {
-          errors.userName = "User already exists.";
+          errors.general = "User already exists.";
         } else {
-          onSetLoading();
+          setLoading(false);
           navigate("/error");
         }
       } catch (error) {
         console.log(error);
       }
     }
+    setLoading(false);
     setFormError(errors);
-    onSetLoading();
   };
 
   const validateForm = (data) => {
@@ -231,7 +231,7 @@ const SignUp = ({ onSetLoading }) => {
           >
             Confirm Password:
           </label>
-          <div className="relative mb-10">
+          <div className="relative mb-8">
             <input
               className={`${
                 formError.confirmPassword && "border border-red-600 "
@@ -256,6 +256,9 @@ const SignUp = ({ onSetLoading }) => {
               </p>
             )}
           </div>
+          {formError.general  && (
+              <p className=" text-center mb-2 text-sm text-red-600">{formError.general}</p>
+            )}
 
           <button className="h-12 bg-neutral-800 text-white text-sm rounded-md dark:bg-neutral-900">
             Sign Up

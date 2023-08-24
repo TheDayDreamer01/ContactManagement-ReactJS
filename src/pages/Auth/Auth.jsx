@@ -17,9 +17,7 @@ const Auth = () => {
     if (isAuthenticated !== null) {
       navigate("/dashboard", { replace: true });
     }
-  }, [setDark, navigate]);
-
-  const onSetLoading = () => setLoading(!loading);
+  }, [setDark, navigate , loading]);
 
   return (
     <div className={`${isDark ? "dark" : ""}`}>
@@ -51,9 +49,9 @@ const Auth = () => {
           </nav>
 
           {register ? (
-            <SignUp onSetLoading={onSetLoading} />
+            <SignUp setLoading={setLoading} />
           ) : (
-            <SignIn onSetLoading={onSetLoading} />
+            <SignIn setLoading={setLoading} />
           )}
         </div>
 
