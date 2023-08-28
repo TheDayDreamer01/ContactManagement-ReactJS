@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TbHexagon3D } from "react-icons/tb";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
+import SignIn from "../../components/auth/SignIn";
+import SignUp from "../../components/auth/SignUp";
 import Loading from "../../components/Loading";
+import useLoading from "../../hooks/useLoading.js";
 
 const Auth = () => {
   const navigate = useNavigate();
+
+  const { loading, setOnLoading } = useLoading();
   const [register, setRegister] = useState(false);
   const [isDark, setDark] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setDark(localStorage.getItem("isDark") === "true");
+    
     const isAuthenticated = sessionStorage.getItem("token");
     if (isAuthenticated !== null) {
       navigate("/dashboard", { replace: true });
@@ -49,9 +52,9 @@ const Auth = () => {
           </nav>
 
           {register ? (
-            <SignUp setLoading={setLoading} />
+            <SignUp setOnLoading={setOnLoading} />
           ) : (
-            <SignIn setLoading={setLoading} />
+            <SignIn setOnLoading={setOnLoading} />
           )}
         </div>
 
