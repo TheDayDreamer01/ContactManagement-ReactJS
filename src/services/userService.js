@@ -26,7 +26,7 @@ export const UpdateUserProfile = async (key, userData) => {
     const axiosInstance = instance(key);
 
     try {
-        const response = await axiosInstance.get("", userData);
+        const response = await axiosInstance.put("", userData);
         return response;
     } catch (error) {
         return error.response;
