@@ -38,12 +38,18 @@ const ContactForm = ({
     const getUserContact = async () => {
       const response = await GetUserContact(token, contactId);
 
-      if (response.data.phoneNo) {
-        response.data.phoneNo = response.data.phoneNo.substring(3);
+      try {
+        if (response.status === 200) {
+          if (response.data.phoneNo) {
+            response.data.phoneNo = response.data.phoneNo.substring(3);
+          }
+          delete response.data.createdAt;
+          delete response.data.id;
+          setFormData(response.data);
+        }
+      } catch (error) {
+        console.log(error);
       }
-      delete response.data.createdAt;
-      delete response.data.id;
-      setFormData(response.data);
     };
 
     if (contactId !== null && contactId !== undefined) {

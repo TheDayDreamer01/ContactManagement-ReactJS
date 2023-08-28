@@ -17,9 +17,7 @@ const ModalBox = ({ icon, title, message, onAccept, onCancel }) => {
         >
           <div className="p-8 flex flex-col items-center justify-center h-full">
             <div className="flex-grow flex flex-col items-center justify-center gap-2 text-center mb-8 ">
-              <div className="text-red-500 mt-2">
-                {icon}
-              </div>
+              <div className="text-red-500 mt-2">{icon}</div>
               <h1 className="text-2xl font-bold">{title}</h1>
               <p className="text-sm text-neutral-600 max-w-[14rem] dark:text-neutral-200">
                 {message}

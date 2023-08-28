@@ -39,13 +39,13 @@ export const ContactItem = ({
   );
 };
 
-// export const ContactHeader = ({ title }) => {
-//   return (
-//     <div className="w-full rounded-md bg-neutral-800 mt-2 dark:bg-neutral-900">
-//       <p className="p-1 ml-4 font-semibold text-white">{title}</p>
-//     </div>
-//   );
-// };
+export const ContactTitleHeader = ({ title }) => {
+  return (
+    <div className="w-full rounded-md bg-neutral-200 mt-2 dark:bg-neutral-800 sticky top-0 z-0">
+      <p className="p-1 ml-4 font-semibold dark:text-white">{title}</p>
+    </div>
+  );
+};
 
 export const ContactHeader = () => {
   return (

@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { Context } from "../pages/Dashboard";
 
 export const SideBar = ({ children }) => {
-  const [navBar, setNavBar] = useContext(Context);
+  const [showNavBar, setShowNavBar] = useContext(Context);
 
   return (
     <>
@@ -14,14 +14,14 @@ export const SideBar = ({ children }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         className={`${
-          navBar ? "block" : "hidden"
+          showNavBar ? "block" : "hidden"
         } absolute h-screen w-screen bg-[#0000006f] top-0 z-10`}
-        onClick={() => setNavBar(!navBar)}
+        onClick={() => setShowNavBar(!showNavBar)}
       ></motion.div>
 
       <nav
         className={`${
-          navBar ? "translate-x-0" : "-translate-x-full"
+          showNavBar ? "translate-x-0" : "-translate-x-full"
         } absolute top-0 left-0 h-screen w-72 bg-neutral-800 z-20 transition-all ease shadow-md md:relative md:translate-x-[100] dark:bg-neutral-900 lg:z-10`}
       >
         <div className="h-full flex flex-col text-white items-start p-4 md:px-8">
@@ -36,9 +36,9 @@ export const SideBar = ({ children }) => {
         </div>
         <button
           className={`${
-            navBar ? "-right-14" : "right-0"
+            showNavBar ? "-right-14" : "right-0"
           } absolute  top-4 text-black p-2 rounded-full bg-neutral-200  transition-all ease delay-100 hover:bg-neutral-300 md:hidden`}
-          onClick={() => setNavBar(!navBar)}
+          onClick={() => setShowNavBar(!showNavBar)}
         >
           <BiX size={26} />
         </button>
