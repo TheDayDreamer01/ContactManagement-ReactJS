@@ -11,7 +11,7 @@ const useFormData = (initialData) => {
         });
     };
 
-    return { formData, onSetFormData };
+    return { formData, onSetFormData, setFormData };
 }
 
 export default useFormData;
