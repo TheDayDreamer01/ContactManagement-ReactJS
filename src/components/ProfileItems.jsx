@@ -65,7 +65,7 @@ export const ProfileItem = ({ icon, title, data }) => {
   );
 };
 
-export const ProfileContactCount = ({ contact, favorite, block }) => {
+export const ProfileContactCount = ({ contact, favorite }) => {
   return (
     <>
       <div className="flex items-center w-full gap-6 my-2 p-4 flex-overflow">
@@ -79,12 +79,6 @@ export const ProfileContactCount = ({ contact, favorite, block }) => {
           <h2 className="font-mono text-2xl font-semibold">{favorite}</h2>
           <p className="text-md leading-6 text-neutral-600 dark:text-neutral-200 ">
             Favorites
-          </p>
-        </span>
-        <span className="flex-1 text-center">
-          <h2 className="font-mono text-2xl font-semibold">{block}</h2>
-          <p className="text-md leading-6 text-neutral-600 dark:text-neutral-200 ">
-            Blocks
           </p>
         </span>
       </div>

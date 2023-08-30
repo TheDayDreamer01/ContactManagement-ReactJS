@@ -77,18 +77,13 @@ const Contact = ({
                   element.firstName[0].toUpperCase() === letter && (
                     <ContactItem
                       key={index}
+                      id={element.id}
                       firstName={element.firstName}
                       lastName={element.lastName}
                       phone={element.phoneNo}
                       email={element.email}
-                      date={`${element.createdAt.substring(
-                        5,
-                        7
-                      )}-${element.createdAt.substring(
-                        8,
-                        10
-                      )}-${element.createdAt.substring(0, 4)}`}
                       onContactView={() => onSelectedContact(element.id)}
+                      favorite={element.isFavorite === "true"}
                     />
                   )
               )}

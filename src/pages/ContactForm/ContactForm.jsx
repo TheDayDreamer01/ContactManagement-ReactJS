@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { BiX } from "react-icons/bi";
@@ -12,6 +13,14 @@ import {
 } from "../../services/contactService.js";
 import ModalBox from "../../components/ModalBox";
 import { GetUserContact } from "../../services/contactService.js";
+import useFormData from "../../hooks/useFormData.js";
+import useFormError from "../../hooks/useFormError.js";
+import {
+  validateEmail,
+  validateFirstName,
+  validateLastName,
+  validatePhone,
+} from "../../utils/validation.js";
 
 const ContactForm = ({
   contactId,
@@ -19,7 +28,9 @@ const ContactForm = ({
   onAddContact,
   onPageChange,
   isEdit,
+  setIsSuccess,
 }) => {
+  const navigation = useNavigate();
   const token = sessionStorage.getItem("token");
   const initialData = {
     firstName: "",
@@ -30,8 +41,8 @@ const ContactForm = ({
     deliveryAddress: "",
   };
 
-  const [formData, setFormData] = useState(initialData);
-  const [formError, setFormError] = useState({});
+  const { formData, onSetFormData, setFormData } = useFormData(initialData);
+  const { formError, onSetFormError } = useFormError();
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -41,14 +52,15 @@ const ContactForm = ({
       try {
         if (response.status === 200) {
           if (response.data.phoneNo) {
-            response.data.phoneNo = response.data.phoneNo.substring(3);
+            response.data.phoneNo = response.data.phoneNo.substring(4);
           }
           delete response.data.createdAt;
           delete response.data.id;
           setFormData(response.data);
         }
       } catch (error) {
-        console.log(error);
+        
+        navigation("/error");
       }
     };
 
@@ -57,20 +69,12 @@ const ContactForm = ({
     }
   }, [addContact]);
 
-  const setFormValue = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   const onFormSubmit = async (e) => {
     e.preventDefault();
-    const errors = validateForm(formData);
 
-    if (Object.keys(errors).length === 0) {
-      formData.phoneNo = "+63" + formData.phoneNo;
+    const errors = validateForm(formData);
+    if (Object.values(errors).every((value) => value === "")) {
+      formData.phoneNo = "+639" + formData.phoneNo;
 
       try {
         const response = isEdit
@@ -81,49 +85,22 @@ const ContactForm = ({
           setFormData(initialData);
           onExitForm();
           onPageChange();
+          setIsSuccess(true);
         }
       } catch (error) {
+        
         console.log(error);
       }
     }
-    setFormError(errors);
+    onSetFormError(errors);
   };
 
   const validateForm = (data) => {
     const errors = {};
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const namePattern = /^[\w\d\s]+$/;
-    const phonePattern = /^[\w]+$/;
-
-    if (!data.firstName.trim()) {
-      errors.firstName = "First Name is required.";
-    } else if (data.firstName.trim().length < 2) {
-      errors.firstName = "Must be 2 characters long.";
-    } else if (!data.firstName.match(namePattern)) {
-      errors.firstName = "Invalid first name.";
-    }
-
-    if (!data.lastName.trim()) {
-      errors.lastName = "Last Name is required.";
-    } else if (data.lastName.trim().length < 2) {
-      errors.lastName = "Must be 2 characters long.";
-    } else if (!data.lastName.match(namePattern)) {
-      errors.lastName = "Invalid last name.";
-    }
-
-    if (!data.email.trim()) {
-      errors.email = "Email Address is required.";
-    } else if (!data.email.match(emailPattern)) {
-      errors.email = "Invalid Email Address.";
-    }
-
-    if (!data.phoneNo.trim()) {
-      errors.phoneNo = "Phone No. is required.";
-    } else if (data.phoneNo.trim().length != 10) {
-      errors.phoneNo = "Phone Number must be 10 characters long.";
-    } else if (!data.phoneNo.match(phonePattern)) {
-      errors.phoneNo = "Invalid phone number.";
-    }
+    errors.firstName = validateFirstName(data.firstName);
+    errors.lastName = validateLastName(data.lastName);
+    errors.email = validateEmail(data.email);
+    errors.phone = validatePhone(data.phoneNo);
 
     if (!data.billingAddress.trim()) {
       errors.billingAddress = "Billing Address is required.";
@@ -152,7 +129,7 @@ const ContactForm = ({
   const onShowModal = () => setShowModal(!showModal);
   const onExitForm = () => {
     setFormData(initialData);
-    setFormError({});
+    onSetFormError({});
     onAddContact();
   };
 
@@ -195,7 +172,7 @@ const ContactForm = ({
             </h1>
           </div>
           <form className="flex flex-col" onSubmit={onFormSubmit}>
-            <div className="flex gap-4  md:gap-6">
+            <div className="flex gap-4 md:gap-6">
               <span className="flex-grow">
                 <label
                   className="text-neutral-600 py-2 text-sm block dark:text-neutral-200"
@@ -211,7 +188,7 @@ const ContactForm = ({
                   type="text"
                   value={formData.firstName}
                   name="firstName"
-                  onChange={setFormValue}
+                  onChange={onSetFormData}
                 />
                 {formError.firstName && (
                   <p className="text-sm text-red-600">{formError.firstName}</p>
@@ -232,7 +209,7 @@ const ContactForm = ({
                   value={formData.lastName}
                   type="text"
                   name="lastName"
-                  onChange={setFormValue}
+                  onChange={onSetFormData}
                 />
 
                 {formError.lastName && (
@@ -254,7 +231,7 @@ const ContactForm = ({
               value={formData.email}
               type="text"
               name="email"
-              onChange={setFormValue}
+              onChange={onSetFormData}
             />
             {formError.email && (
               <p className="text-sm text-red-600">{formError.email}</p>
@@ -263,11 +240,11 @@ const ContactForm = ({
               className="text-neutral-600 mt-2 py-2 text-sm dark:text-neutral-200"
               htmlFor="phoneNo"
             >
-              Phone No:
+              Mobile No:
             </label>
             <div className="relative flex items-center">
               <span className="bg-neutral-800 text-white absolute h-full flex items-center px-4 rounded-s-md">
-                <p className="font-semibold">+63</p>
+                <p className="font-semibold">+639</p>
               </span>
               <input
                 className={`${
@@ -277,7 +254,7 @@ const ContactForm = ({
                 value={formData.phoneNo}
                 type="text"
                 name="phoneNo"
-                onChange={setFormValue}
+                onChange={onSetFormData}
               />
             </div>
             {formError.phoneNo && (
@@ -297,7 +274,7 @@ const ContactForm = ({
               id="billingAddress"
               value={formData.billingAddress}
               name="billingAddress"
-              onChange={setFormValue}
+              onChange={onSetFormData}
             ></textarea>
             {formError.billingAddress && (
               <p className="text-sm text-red-600">{formError.billingAddress}</p>
@@ -316,7 +293,7 @@ const ContactForm = ({
                 id="deliveryAddress"
                 value={formData.deliveryAddress}
                 name="deliveryAddress"
-                onChange={setFormValue}
+                onChange={onSetFormData}
               ></textarea>
               {formError.deliveryAddress && (
                 <p className="text-sm text-red-600">

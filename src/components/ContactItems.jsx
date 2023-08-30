@@ -1,16 +1,41 @@
 /* eslint-disable react/prop-types */
+// eslint-disable-next-line no-unused-vars
+import { BsStar, BsStarFill } from "react-icons/bs";
+import { useState } from "react";
+import { UpdateUserContactProperty } from "../services/contactService.js";
 
 export const ContactItem = ({
+  id,
   firstName,
   lastName,
   email,
   phone,
-  date,
   onContactView,
+  favorite
 }) => {
+  const token = sessionStorage.getItem("token");
+  const [isFavorite, setIsFavorite] = useState(favorite);
+
+  const updateUserContactProperty = async () => {
+    try {
+      const response = await UpdateUserContactProperty(token, id, [
+        {
+          path: "/isFavorite",
+          op: "replace",
+          value: !isFavorite,
+        },
+      ]);
+      setIsFavorite(prev => !prev);
+
+      console.log("Update successful:", response.data);
+    } catch (error) {
+      console.error("Update error:", error.data);
+    }
+  };
+
   return (
     <>
-      <button
+      <div
         className="p-4 w-full text-start rounded-md my-1 hover:bg-neutral-100 dark:hover:bg-neutral-600 "
         onClick={onContactView}
       >
@@ -21,8 +46,8 @@ export const ContactItem = ({
               {lastName[0].toUpperCase()}
             </h1>
           </div>
-          <div className="text-neutral-600 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 place-content-between w-full place-items-center text-md dark:text-neutral-200">
-            <div className="place-self-start max-w-[18rem] lg:max-w-[8rem]">
+          <div className="text-neutral-600 grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 place-content-between w-full place-items-center text-md dark:text-neutral-200">
+            <div className="place-self-start max-w-[20rem] lg:max-w-[10rem]">
               <h1 className="text-neutral-900 font-medium truncate dark:text-white">
                 {firstName} {lastName}
               </h1>
@@ -30,10 +55,18 @@ export const ContactItem = ({
             </div>
             <p className="hidden xl:block">{email}</p>
             <p className="hidden 2xl:xl:block">{phone}</p>
-            <p className="text-sm italic hidden xl:block">{date}</p>
+            <div className="text-sm italic place-self-end lg:place-self-center px-4 relative">
+              <button onClick={updateUserContactProperty}>
+                {isFavorite ? (
+                  <BsStarFill size={26} className="text-amber-300" />
+                ) : (
+                  <BsStar size={26} />
+                )}
+              </button>
+            </div>
           </div>
         </div>
-      </button>
+      </div>
       <hr />
     </>
   );
@@ -49,17 +82,8 @@ export const ContactTitleHeader = ({ title }) => {
 
 export const ContactHeader = () => {
   return (
-    <div className="p-4 w-full text-start rounded-md my-1 bg-neutral-800 text-white font-semibold dark:bg-neutral-900 ">
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 place-content-between w-full place-items-center text-md dark:text-neutral-200">
-        <div className="place-self-start max-w-[18rem] lg:max-w-[8rem]">
-          <h1 className="font-medium truncate ">
-            Contact Person
-          </h1>
-        </div>
-        <p className="hidden xl:block">Email Address</p>
-        <p className="hidden 2xl:xl:block">Phone No.</p>
-        <p className="hidden xl:block">Date</p>
-      </div>
+    <div className="p-4 w-full text-start rounded-md my-1 bg-neutral-800 text-white dark:bg-neutral-900 ">
+      <h1 className="text-start text-xl font-semibold">Contact List</h1>
     </div>
   );
 };

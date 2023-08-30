@@ -1,12 +1,18 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { BiX } from "react-icons/bi";
 import {
   GetUserProfile,
   UpdateUserProfile,
 } from "../../services/userService.js";
+import useFormData from "../../hooks/useFormData.js";
+import useFormError from "../../hooks/useFormError.js";
+import {
+  validateFirstName,
+  validateLastName
+} from "../../utils/validation.js";
 
 const ProfileForm = ({ editProfile, onEditProfile }) => {
   const token = sessionStorage.getItem("token");
@@ -16,8 +22,8 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
     userName: "",
   };
 
-  const [formData, setFormData] = useState(initialData);
-  const [formError, setFormError] = useState({});
+  const { formData, onSetFormData, setFormData} = useFormData(initialData);
+  const { formError, onSetFormError } = useFormError();
 
   useEffect(() => {
     const getUserProfile = async () => {
@@ -40,19 +46,11 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
     getUserProfile();
   }, []);
 
-  const setFormValue = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
   const onFormSubmit = async (e) => {
     e.preventDefault();
     const errors = validateForm(formData);
 
-    if (Object.keys(errors).length === 0) {
+    if (Object.values(errors).every(value => value === "")) {
       const response = await UpdateUserProfile(token, formData);
 
       try {
@@ -63,28 +61,15 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
         console.log(error);
       }
     }
-    setFormError(errors);
+    onSetFormError(errors);
   };
 
   const validateForm = (data) => {
     const errors = {};
-    const namePattern = /^[\w\d\s]+$/;
 
-    if (!data.firstName.trim()) {
-      errors.firstName = "First Name is required.";
-    } else if (data.firstName.trim().length < 2) {
-      errors.firstName = "Firstname must at least be 2 characters long.";
-    } else if (!data.firstName.match(namePattern)) {
-      errors.firstName = "Invalid first name.";
-    }
+    errors.firstName = validateFirstName(data.firstName);
+    errors.lastName = validateLastName(data.lastName);
 
-    if (!data.lastName.trim()) {
-      errors.lastName = "Last Name is required.";
-    } else if (data.lastName.trim().length < 2) {
-      errors.lastName = "Must must at least be 2 characters long.";
-    } else if (!data.lastName.match(namePattern)) {
-      errors.lastName = "Invalid last name.";
-    }
     if (!data.userName.trim()) {
       errors.userName = "Last Name is required.";
     } else if (data.userName.trim().length < 2) {
@@ -136,7 +121,7 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
               value={formData.firstName}
               type="text"
               name="firstName"
-              onChange={setFormValue}
+              onChange={onSetFormData}
             />
             {formError.firstName && (
               <p className="text-sm text-red-600">{formError.firstName}</p>
@@ -155,7 +140,7 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
               value={formData.lastName}
               type="text"
               name="lastName"
-              onChange={setFormValue}
+              onChange={onSetFormData}
             />
             {formError.lastName && (
               <p className="text-sm text-red-600">{formError.lastName}</p>
@@ -174,7 +159,7 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
               value={formData.userName}
               type="text"
               name="userName"
-              onChange={setFormValue}
+              onChange={onSetFormData}
             />
             {formError.userName && (
               <p className="text-sm text-red-600">{formError.userName}</p>
