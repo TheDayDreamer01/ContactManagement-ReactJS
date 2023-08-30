@@ -53,6 +53,17 @@ export const UpdateUserContact = async (key, contactId, contactData) => {
     }
 };
 
+export const UpdateUserContactProperty = async (key, contactId, contactData) => {
+    const axiosInstance = instance(key);
+
+    try {
+        const response = await axiosInstance.patch(`/${contactId}`, contactData);
+        return response;
+    } catch (error) {
+        return error.response;
+    }
+};
+
 export const DeleteUserContact = async (key, contactId) => {
     const axiosInstance = instance(key);
 
