@@ -56,3 +56,17 @@ export const validateConfirmPassword = (password, confirmPassword) => {
     return "";
   }
 };
+
+export const validatePhone = (phoneNo) => {
+  const phonePattern = /^[\w]+$/;
+
+  if (!phoneNo.trim()) {
+    return "Phone No. is required.";
+  } else if (phoneNo.trim().length != 9) {
+    return "Phone Number must be 9 characters long.";
+  } else if (!phoneNo.match(phonePattern)) {
+    return "Invalid phone number.";
+  } else {
+    return "";
+  }
+}
