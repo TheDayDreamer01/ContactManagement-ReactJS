@@ -4,16 +4,11 @@ import { BiSearch, BiMenu, BiMoon, BiSun } from "react-icons/bi";
 import { Context } from "../pages/Dashboard";
 
 const Header = ({ setSearchContact }) => {
-  const [
-    showNavBar,
-    setShowNavBar,
-    dark,
-    setDark,
-  ] = useContext(Context);
+  const [showNavBar, setShowNavBar, dark, setDark] = useContext(Context);
 
   const onSearchContact = (e) => setSearchContact(e.target.value);
   const onShowNavBar = () => setShowNavBar(!showNavBar);
-  const onDarkMode = () => setDark(!dark)
+  const onDarkMode = () => setDark(!dark);
 
   return (
     <header className="p-4 transition-colors ease dark:bg-neutral-800">

@@ -9,10 +9,9 @@ export const ProfileHeader = ({
   onEdit,
   buttonVisibility,
 }) => {
-
   let name;
-  
-  if (firstName !== undefined || lastName !== undefined){
+
+  if (firstName !== undefined || lastName !== undefined) {
     name = firstName[0].toUpperCase() + lastName[0].toUpperCase();
   }
 
@@ -34,7 +33,7 @@ export const ProfileHeader = ({
 
         <div className="absolute -bottom-10 min-w-[4.5rem] min-h-[4.5rem] bg-neutral-300 rounded-lg flex justify-center items-center dark:bg-neutral-800">
           <h1 className="text-neutral-600 font-bold text-2xl dark:text-neutral-200">
-              {name}
+            {name}
           </h1>
         </div>
       </div>

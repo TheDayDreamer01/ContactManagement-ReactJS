@@ -1,14 +1,14 @@
 import { useState } from "react";
 
 const useVisible = () => {
-    const [ visible, setVisible ] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-    const onSetVisibility = (e) => {
-        e.preventDefault();
-        setVisible(prev => !prev);
-    };
+  const onSetVisibility = (e) => {
+    e.preventDefault();
+    setVisible((prev) => !prev);
+  };
 
-    return { visible, onSetVisibility };
+  return { visible, onSetVisibility };
 };
 
 export default useVisible;

@@ -21,14 +21,14 @@ import {
   validateLastName,
   validatePhone,
 } from "../../utils/validation.js";
+import { getCurrentDate } from "../../utils/currentDate.js";
 
 const ContactForm = ({
   contactId,
   addContact,
   onAddContact,
-  onPageChange,
+  onSelectedContact,
   isEdit,
-  setIsSuccess,
 }) => {
   const navigation = useNavigate();
   const token = sessionStorage.getItem("token");
@@ -59,7 +59,6 @@ const ContactForm = ({
           setFormData(response.data);
         }
       } catch (error) {
-        
         navigation("/error");
       }
     };
@@ -84,11 +83,17 @@ const ContactForm = ({
         if (response.status === 200) {
           setFormData(initialData);
           onExitForm();
-          onPageChange();
-          setIsSuccess(true);
+
+          const activities =
+            JSON.parse(sessionStorage.getItem("activities")) || [];
+          activities.push({
+            status: isEdit ? "Edit" : "Create",
+            description: `${isEdit ? "Edit" : "Add"} Contact Person`,
+            date: getCurrentDate(),
+          });
+          sessionStorage.setItem("activities", JSON.stringify(activities));
         }
       } catch (error) {
-        
         console.log(error);
       }
     }
@@ -100,7 +105,7 @@ const ContactForm = ({
     errors.firstName = validateFirstName(data.firstName);
     errors.lastName = validateLastName(data.lastName);
     errors.email = validateEmail(data.email);
-    errors.phone = validatePhone(data.phoneNo);
+    errors.phoneNo = validatePhone(data.phoneNo);
 
     if (!data.billingAddress.trim()) {
       errors.billingAddress = "Billing Address is required.";
@@ -114,16 +119,17 @@ const ContactForm = ({
   };
 
   const onDeleteUserContact = async () => {
-    try {
-      const response = await DeleteUserContact(token, contactId);
-      if (response === 200) {
-        onShowModal();
-      }
-    } catch (error) {
-      console.log(error);
-    }
     onExitForm();
-    onPageChange();
+    onShowModal();
+    onSelectedContact(null);
+    await DeleteUserContact(token, contactId);
+    const activities = JSON.parse(sessionStorage.getItem("activities")) || [];
+    activities.push({
+      status: "Delete",
+      description: "Delete Contact Person",
+      date: getCurrentDate(),
+    });
+    sessionStorage.setItem("activities", JSON.stringify(activities));
   };
 
   const onShowModal = () => setShowModal(!showModal);

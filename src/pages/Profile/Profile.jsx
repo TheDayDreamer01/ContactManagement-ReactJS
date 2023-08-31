@@ -16,9 +16,9 @@ const Profile = ({ editProfile, onEditPage }) => {
   const navigation = useNavigate();
   const [userData, setUserData] = useState({});
   const [contactCount, setContactCount] = useState(0);
+  const [favoriteCount, setFavoriteCount] = useState(0);
 
   useEffect(() => {
-
     const getUserProfile = async () => {
       const response = await GetUserProfile(token);
       try {
@@ -26,24 +26,27 @@ const Profile = ({ editProfile, onEditPage }) => {
           setUserData(response.data);
         } else if (response.status === 401) {
           sessionStorage.clear();
-          navigation("/auth", { replace : true });
+          navigation("/auth", { replace: true });
         }
-        
       } catch (error) {
         console.log(error);
       }
     };
 
     const getUserContacts = async () => {
-        const response = await GetUserContacts(token);
-        try {
-          if (response.status === 200) {
-            setContactCount(response.data.length);
-          } 
-        } catch (error) {
-          console.log(error);
+      const response = await GetUserContacts(token);
+      try {
+        if (response.status === 200) {
+          const contact = response.data;
+          const favorite = contact.filter((element) => element.isFavorite);
+
+          setContactCount(contact.length);
+          setFavoriteCount(favorite.length);
         }
-    };  
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     getUserProfile();
     getUserContacts();
@@ -56,7 +59,7 @@ const Profile = ({ editProfile, onEditPage }) => {
       onEdit={onEditPage}
       buttonVisibility={false}
     >
-      <ProfileContactCount contact={contactCount} favorite={0} block={0} />
+      <ProfileContactCount contact={contactCount} favorite={favoriteCount} />
       <ProfileItem
         icon={<BsCardHeading size={24} />}
         title="Username"

@@ -69,4 +69,4 @@ export const validatePhone = (phoneNo) => {
   } else {
     return "";
   }
-}
+};

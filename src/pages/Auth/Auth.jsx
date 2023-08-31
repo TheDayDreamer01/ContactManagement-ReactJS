@@ -15,16 +15,15 @@ const Auth = () => {
 
   useEffect(() => {
     setDark(localStorage.getItem("isDark") === "true");
-    
+
     const isAuthenticated = sessionStorage.getItem("token");
     if (isAuthenticated !== null) {
       navigate("/dashboard", { replace: true });
     }
-  }, [setDark, navigate , loading]);
+  }, [setDark, navigate, loading]);
 
   return (
     <div className={`${isDark ? "dark" : ""}`}>
-
       {loading && <Loading />}
       <div className="flex flex-col h-screen p-4 md:px-8 items-center dark:bg-neutral-800 dark:text-white">
         <div className="self-start flex items-center">

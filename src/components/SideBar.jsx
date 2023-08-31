@@ -20,7 +20,7 @@ export const SideBar = ({ children }) => {
       ></motion.div>
 
       <nav
-        className={`${  
+        className={`${
           showNavBar ? "translate-x-0" : "-translate-x-full"
         } absolute top-0 left-0 h-screen min-w-[18rem] bg-neutral-800 z-20 transition-all ease shadow-md md:relative md:translate-x-[100] dark:bg-neutral-900 lg:z-10`}
       >

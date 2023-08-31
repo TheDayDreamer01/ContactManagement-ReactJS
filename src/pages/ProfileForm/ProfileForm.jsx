@@ -9,10 +9,7 @@ import {
 } from "../../services/userService.js";
 import useFormData from "../../hooks/useFormData.js";
 import useFormError from "../../hooks/useFormError.js";
-import {
-  validateFirstName,
-  validateLastName
-} from "../../utils/validation.js";
+import { validateFirstName, validateLastName } from "../../utils/validation.js";
 
 const ProfileForm = ({ editProfile, onEditProfile }) => {
   const token = sessionStorage.getItem("token");
@@ -22,7 +19,7 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
     userName: "",
   };
 
-  const { formData, onSetFormData, setFormData} = useFormData(initialData);
+  const { formData, onSetFormData, setFormData } = useFormData(initialData);
   const { formError, onSetFormError } = useFormError();
 
   useEffect(() => {
@@ -31,11 +28,10 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
 
       try {
         if (response.status === 200) {
-          
           setFormData({
-            firstName : response.data.firstName,
-            lastName : response.data.lastName,
-            userName : response.data.userName
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            userName: response.data.userName,
           });
         }
       } catch (error) {
@@ -50,7 +46,7 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
     e.preventDefault();
     const errors = validateForm(formData);
 
-    if (Object.values(errors).every(value => value === "")) {
+    if (Object.values(errors).every((value) => value === "")) {
       const response = await UpdateUserProfile(token, formData);
 
       try {
@@ -74,7 +70,7 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
       errors.userName = "Last Name is required.";
     } else if (data.userName.trim().length < 2) {
       errors.userName = "Username must be 2 characters long.";
-    } 
+    }
 
     return errors;
   };
@@ -106,7 +102,6 @@ const ProfileForm = ({ editProfile, onEditProfile }) => {
             <h1 className="text-xl font-semibold">Edit User Profile</h1>
           </div>
           <form className="flex flex-col" onSubmit={onFormSubmit}>
-           
             <label
               className="text-neutral-600 mt-2 py-2 text-sm dark:text-neutral-200"
               htmlFor="firstName"

@@ -53,7 +53,7 @@ const Contact = ({
           setContactData(filterlist);
         } else if (response.status === 401) {
           sessionStorage.clear();
-          navigation("/auth", { replace : true });
+          navigation("/auth", { replace: true });
         }
       } catch (error) {
         console.log(error);
@@ -83,7 +83,7 @@ const Contact = ({
                       phone={element.phoneNo}
                       email={element.email}
                       onContactView={() => onSelectedContact(element.id)}
-                      favorite={element.isFavorite === "true"}
+                      favorite={element.isFavorite}
                     />
                   )
               )}

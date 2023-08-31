@@ -13,7 +13,6 @@ import ContactDetail from "../ContactDetail";
 import { SideBar, SideBarItem } from "../../components/SideBar";
 import Device from "../../assets/svg/Device.svg";
 import ContactForm from "../ContactForm/ContactForm";
-// import { Information, Successful, Unsuccessful, Warning } from "../../components/Toasts";
 import ProfileForm from "../ProfileForm/ProfileForm";
 
 export const Context = React.createContext();
@@ -40,7 +39,6 @@ const Dashboard = () => {
     if (isAuthenticated === null) {
       navigate("/auth", { replace: true });
     }
-  
   }, [dark, navigate]);
 
   const onAddContact = () => setAddContact(!addContact);
@@ -84,6 +82,7 @@ const Dashboard = () => {
           addContact={editContact}
           onAddContact={onEditContact}
           onPageChange={onDefaultPage}
+          onSelectedContact={onSelectedContact}
           isEdit
         />
 
@@ -138,8 +137,7 @@ const Dashboard = () => {
                       searchContact={searchContact}
                       onSelectedContact={onSelectedContact}
                       addContact={addContact}
-                      editCont
-                      act={editContact}
+                      editContact={editContact}
                     />
                   </motion.div>
                 )}

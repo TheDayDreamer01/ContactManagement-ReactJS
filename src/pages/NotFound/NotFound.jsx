@@ -1,11 +1,5 @@
-import {
-  useEffect,
-  useState 
-} from "react";
-import {
-  useNavigate,
-  useLocation
-} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { BiSolidLeftArrow } from "react-icons/bi";
 import NotFoundSvg from "../../assets/svg/NotFound.svg";
 

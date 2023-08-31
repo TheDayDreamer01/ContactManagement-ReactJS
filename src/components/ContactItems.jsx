@@ -11,26 +11,20 @@ export const ContactItem = ({
   email,
   phone,
   onContactView,
-  favorite
+  favorite,
 }) => {
   const token = sessionStorage.getItem("token");
   const [isFavorite, setIsFavorite] = useState(favorite);
 
   const updateUserContactProperty = async () => {
-    try {
-      const response = await UpdateUserContactProperty(token, id, [
-        {
-          path: "/isFavorite",
-          op: "replace",
-          value: !isFavorite,
-        },
-      ]);
-      setIsFavorite(prev => !prev);
-
-      console.log("Update successful:", response.data);
-    } catch (error) {
-      console.error("Update error:", error.data);
-    }
+    await UpdateUserContactProperty(token, id, [
+      {
+        path: "/isFavorite",
+        op: "replace",
+        value: !isFavorite,
+      },
+    ]);
+    setIsFavorite((prev) => !prev);
   };
 
   return (
