@@ -1,6 +1,17 @@
 /* eslint-disable react/prop-types */
 import { MdArrowBackIosNew, MdEditNote } from "react-icons/md";
 
+/**
+ * ProfileHeader - A header component for displaying user profile information.
+ *
+ * @param {Object} props - The component's properties.
+ * @param {ReactNode} props.children - The children elements to be displayed.
+ * @param {string} props.firstName - The user's first name.
+ * @param {string} props.lastName - The user's last name.
+ * @param {function} props.onBack - A function to handle navigating back.
+ * @param {function} props.onEdit - A function to handle editing the profile.
+ * @param {boolean} props.buttonVisibility - A flag indicating whether the back button is visible.
+ */
 export const ProfileHeader = ({
   children,
   firstName,
@@ -47,6 +58,14 @@ export const ProfileHeader = ({
   );
 };
 
+/**
+ * ProfileItem - A component for displaying profile item information.
+ *
+ * @param {Object} props - The component's properties.
+ * @param {ReactNode} props.icon - The icon element to be displayed.
+ * @param {string} props.title - The title of the profile item.
+ * @param {string} props.data - The data to be displayed for the profile item.
+ */
 export const ProfileItem = ({ icon, title, data }) => {
   return (
     <>
@@ -64,6 +83,14 @@ export const ProfileItem = ({ icon, title, data }) => {
   );
 };
 
+/**
+ * ProfileContactCount - A component for displaying profile contact counts.
+ *
+ * @param {Object} props - The component's properties.
+ * @param {number} props.contact - The total number of contacts.
+ * @param {number} props.favorite - The number of favorite contacts.
+ * @param {number} props.block - The number of blocked contacts.
+ */
 export const ProfileContactCount = ({ contact, favorite, block }) => {
   return (
     <>

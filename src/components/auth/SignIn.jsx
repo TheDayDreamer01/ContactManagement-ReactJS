@@ -11,6 +11,12 @@ import useSignInFormData from "../../hooks/useFormData.js";
 import useFormError from "../../hooks/useFormError.js";
 import useVisible from "../../hooks/useVisible.js";
 
+/**
+ * SignIn - A component for user sign-in.
+ *
+ * @param {Object} props - The component's properties.
+ * @param {function} props.setOnLoading - A function to set the loading state.
+ */
 const SignIn = ({ setOnLoading }) => {
   const navigate = useNavigate();
 

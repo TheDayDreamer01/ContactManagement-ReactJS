@@ -14,6 +14,9 @@ import FavoritePage from "../FavoritePage";
 import BlockPage from "../BlockPage";
 import ProfilePage from "../ProfilePage";
 
+/**
+ * Dashboard - A component representing the main dashboard page with navigation and content.
+ */
 const Dashboard = () => {
   const navigate = useNavigate();
 
@@ -29,18 +32,22 @@ const Dashboard = () => {
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [selectedContact, setSelectedContact] = useState(null);
 
+  // Functions to toggle states
   const onSetIsAddContact = () => setIsAddContact(!isAddContact);
   const onSetIsEditContact = () => setIsEditContact(!isEditContact);
   const onSetIsEditProfile = () => setIsEditProfile(!isEditProfile);
   const onSetSelectedContact = (value) => setSelectedContact(value);
   const onSetShowNavBar = () => setShowNavBar(!showNavBar);
   const onSetIsDarkMode = () => setIsDarkMode(!isDarkMode);
+
+  // Function to handle page change
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
     setShowNavBar(false);
     onSetSelectedContact(null);
   };
 
+  // Function to sign out
   const onAcceptSignOut = () => {
     sessionStorage.clear();
     navigate("/auth", { replace: true });
@@ -51,6 +58,7 @@ const Dashboard = () => {
     setShowNavBar(false);
   };
 
+  // Check authentication on component load
   useEffect(() => {
     localStorage.setItem("isDark", isDarkMode);
 
@@ -60,6 +68,7 @@ const Dashboard = () => {
     }
   }, [navigate, isDarkMode]);
 
+  // Dashboard Pages
   const DashboardPages = {
     0: (
       <ContactPage
@@ -102,17 +111,19 @@ const Dashboard = () => {
 
   return (
     <div className={`${isDarkMode ? "dark" : ""} w-screen h-screen flex`}>
+      {/* Modal for Sign Out */}
       {isShowModal && (
         <ModalBox
           icon={<TbAlertHexagon size={80} />}
           title="Sign Out"
-          message="Are you sure you want to sign out? you'll be missed!"
+          message="Are you sure you want to sign out? You'll be missed!"
           onCancelValue={isShowModal}
           onAccept={onAcceptSignOut}
           onCancel={onCancelSignOut}
         />
       )}
 
+      {/* Profile and Contact Forms */}
       <ProfileForm
         isEditProfile={isEditProfile}
         onSetIsEditProfile={onSetIsEditProfile}
@@ -129,6 +140,7 @@ const Dashboard = () => {
         isEdit
       />
 
+      {/* Sidebar */}
       <SideBar showNavBar={showNavBar} onSetShowNavBar={onSetShowNavBar}>
         <SideBarItem
           title="Contacts"
@@ -163,13 +175,16 @@ const Dashboard = () => {
         />
       </SideBar>
 
+      {/* Main Content */}
       <main className="relative flex-grow h-full flex flex-col bg-neutral-100">
+        {/* Header */}
         <Header
           isDarkMode={isDarkMode}
           setSearchContact={setSearchContact}
           onSetShowNavBar={onSetShowNavBar}
           onSetIsDarkMode={onSetIsDarkMode}
         />
+        {/* Content */}
         <section className="p-4 flex-grow flex md:px-8 gap-8 overflow-hidden transition-colors ease dark:bg-neutral-800">
           {DashboardPages[currentPage]}
         </section>

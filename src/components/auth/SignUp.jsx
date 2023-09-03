@@ -14,6 +14,12 @@ import useFormData from "../../hooks/useFormData.js";
 import useFormError from "../../hooks/useFormError.js";
 import useVisible from "../../hooks/useVisible.js";
 
+/**
+ * SignUp - A component for user sign-up.
+ *
+ * @param {Object} props - The component's properties.
+ * @param {function} props.setOnLoading - A function to set the loading state.
+ */
 const SignUp = ({ setOnLoading }) => {
   const navigate = useNavigate();
 

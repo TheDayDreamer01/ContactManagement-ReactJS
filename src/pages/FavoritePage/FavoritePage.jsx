@@ -4,6 +4,16 @@ import DeviceSvg from "../../assets/svg/Device.svg";
 import ContactList from "../../components/contact/ContactList";
 import ContactDetail from "../../components/contact/ContactDetail";
 
+/**
+ * FavoritePage - A page for displaying favorite contacts.
+ * @param {Object} props - The component's props.
+ * @param {string} searchContact - The search query for filtering contacts.
+ * @param {boolean} isAddContact - Flag indicating if contact is being added.
+ * @param {boolean} isEditContact - Flag indicating if contact is being edited.
+ * @param {object} selectedContact - The selected contact to display details.
+ * @param {function} onSetIsEditContact - Function to toggle edit mode for contact.
+ * @param {function} onSetSelectedContact - Function to set the selected contact.
+ */
 const FavoritePage = ({
   searchContact,
   isAddContact,

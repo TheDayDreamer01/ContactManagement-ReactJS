@@ -7,11 +7,20 @@ import Errors from "./pages/Errors";
 const App = () => {
   return (
     <Routes>
-      <Route path="/" index element={<Auth />} />
-      <Route path="/auth" element={<Auth />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/error" element={<Errors />} />
-      <Route path="/*" element={<NotFound />} />
+      {/* Home Page */}
+      <Route path="/" element={<Auth />} />
+
+      {/* Authentication Pages */}
+      <Route path="/auth/*" element={<Auth />} />
+
+      {/* Dashboard */}
+      <Route path="/dashboard/*" element={<Dashboard />} />
+
+      {/* Error Pages */}
+      <Route path="/error/*" element={<Errors />} />
+
+      {/* 404 Not Found Page */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

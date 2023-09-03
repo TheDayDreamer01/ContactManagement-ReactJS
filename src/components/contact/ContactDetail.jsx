@@ -10,6 +10,15 @@ import {
 import { GetUserContact } from "../../services/contactService.js";
 import { ProfileHeader, ProfileItem } from "../profile/ProfileItems.jsx";
 
+/**
+ * ContactDetail - A component for displaying the details of a contact.
+ *
+ * @param {Object} props - The component's properties.
+ * @param {boolean} props.isEditContact - A flag indicating if the contact is being edited.
+ * @param {number} props.selectedContact - The unique identifier of the selected contact.
+ * @param {function} props.onSetSelectedContact - A function to set the selected contact.
+ * @param {function} props.onSetIsEditContact - A function to set the edit mode for the contact.
+ */
 const ContactDetail = ({ isEditContact, selectedContact, onSetSelectedContact, onSetIsEditContact }) => {
   const [userContact, setUserContact] = useState({});
 

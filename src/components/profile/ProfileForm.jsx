@@ -11,6 +11,13 @@ import useFormData from "../../hooks/useFormData.js";
 import useFormError from "../../hooks/useFormError.js";
 import { validateFirstName, validateLastName } from "../../utils/validation.js";
 
+/**
+ * ProfileForm - A component for editing user profile information.
+ *
+ * @param {Object} props - The component's properties.
+ * @param {boolean} props.isEditProfile - A flag indicating whether the user is in profile edit mode.
+ * @param {function} props.onSetIsEditProfile - A function to set the profile edit mode.
+ */
 const ProfileForm = ({ isEditProfile, onSetIsEditProfile }) => {
   const token = sessionStorage.getItem("token");
   const initialData = {
@@ -23,6 +30,9 @@ const ProfileForm = ({ isEditProfile, onSetIsEditProfile }) => {
   const { formError, onSetFormError } = useFormError();
 
   useEffect(() => {
+    /**
+     * Fetches user profile data and populates the form with the user's data.
+     */
     const getUserProfile = async () => {
       const response = await GetUserProfile(token);
 
@@ -42,6 +52,9 @@ const ProfileForm = ({ isEditProfile, onSetIsEditProfile }) => {
     getUserProfile();
   }, []);
 
+  /**
+   * Handles form submission and updates the user profile if there are no validation errors.
+   */
   const onFormSubmit = async (e) => {
     e.preventDefault();
     const errors = validateForm(formData);
@@ -60,6 +73,12 @@ const ProfileForm = ({ isEditProfile, onSetIsEditProfile }) => {
     onSetFormError(errors);
   };
 
+  /**
+   * Validates the form data and returns an object containing validation errors.
+   *
+   * @param {Object} data - The form data to be validated.
+   * @returns {Object} - An object containing validation errors.
+   */
   const validateForm = (data) => {
     const errors = {};
 

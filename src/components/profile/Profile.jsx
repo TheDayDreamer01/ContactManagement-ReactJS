@@ -11,6 +11,13 @@ import {
 import { GetUserContacts } from "../../services/contactService.js";
 import { GetUserProfile } from "../../services/userService.js";
 
+/**
+ * Profile - A component for displaying user profile information.
+ *
+ * @param {Object} props - The component's properties.
+ * @param {boolean} props.isEditProfile - A flag indicating whether the user is in profile edit mode.
+ * @param {function} props.onSetIsEditProfile - A function to set the profile edit mode.
+ */
 const Profile = ({ isEditProfile, onSetIsEditProfile }) => {
   const token = sessionStorage.getItem("token");
   const navigation = useNavigate();
@@ -20,6 +27,9 @@ const Profile = ({ isEditProfile, onSetIsEditProfile }) => {
   const [blockCount, setBlockCount] = useState(0);
 
   useEffect(() => {
+    /**
+     * Fetches user profile data.
+     */
     const getUserProfile = async () => {
       const response = await GetUserProfile(token);
       try {
@@ -34,6 +44,9 @@ const Profile = ({ isEditProfile, onSetIsEditProfile }) => {
       }
     };
 
+    /**
+     * Fetches user contacts and calculates contact statistics.
+     */
     const getUserContacts = async () => {
       const response = await GetUserContacts(token);
       try {
@@ -44,7 +57,7 @@ const Profile = ({ isEditProfile, onSetIsEditProfile }) => {
 
           setContactCount(contact.length);
           setFavoriteCount(favorite.length);
-          setBlockCount(block.length)
+          setBlockCount(block.length);
         }
       } catch (error) {
         console.log(error);
@@ -53,7 +66,7 @@ const Profile = ({ isEditProfile, onSetIsEditProfile }) => {
 
     getUserProfile();
     getUserContacts();
-  }, [isEditProfile]);
+  }, [isEditProfile, navigation]);
 
   return (
     <ProfileHeader

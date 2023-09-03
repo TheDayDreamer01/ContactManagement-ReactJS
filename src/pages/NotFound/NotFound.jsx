@@ -3,6 +3,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { BiSolidLeftArrow } from "react-icons/bi";
 import NotFoundSvg from "../../assets/svg/NotFound.svg";
 
+/**
+ * NotFound - A component for displaying a "Page Not Found" error message.
+ */
 const NotFound = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -12,6 +15,9 @@ const NotFound = () => {
     setDark(localStorage.getItem("isDark") === "true");
   }, []);
 
+  /**
+   * Handles the "Go Back" button click event.
+   */
   const onGoBack = () => navigate(-1);
 
   return (

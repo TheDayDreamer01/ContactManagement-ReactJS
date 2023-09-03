@@ -1,4 +1,13 @@
 /* eslint-disable react/prop-types */
+/**
+ * ActivityItem - A component for displaying an individual activity item.
+ *
+ * This component displays an individual activity item with its status, description, and date.
+ *
+ * @param {string} status - The status of the activity.
+ * @param {string} description - The description of the activity.
+ * @param {string} date - The date of the activity.
+ */
 export const ActivityItem = ({ status, description, date }) => {
   return (
     <>
@@ -18,6 +27,11 @@ export const ActivityItem = ({ status, description, date }) => {
   );
 };
 
+/**
+ * ActivityHeader - A component for displaying the header of the activity list.
+ *
+ * This component displays the header of the activity list, including column titles.
+ */
 export const ActivityHeader = () => {
   return (
     <div className="p-4 w-full text-start rounded-md my-1 bg-neutral-800 text-white font-semibold dark:bg-neutral-900 ">
