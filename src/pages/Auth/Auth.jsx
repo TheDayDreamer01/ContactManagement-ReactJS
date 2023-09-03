@@ -5,6 +5,8 @@ import SignIn from "../../components/auth/SignIn";
 import SignUp from "../../components/auth/SignUp";
 import Loading from "../../components/Loading";
 import useLoading from "../../hooks/useLoading.js";
+import DarkPatternSvg from "../../assets/svg/DarkPattern.svg";
+import LightsPatternSvg from "../../assets/svg/LightPattern.svg";
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -25,7 +27,19 @@ const Auth = () => {
   return (
     <div className={`${isDark ? "dark" : ""}`}>
       {loading && <Loading />}
-      <div className="flex flex-col h-screen p-4 md:px-8 items-center dark:bg-neutral-800 dark:text-white">
+      
+      <div className="flex flex-col h-screen p-4 md:px-8 items-center dark:bg-neutral-800 dark:text-white overflow-x-hidden">
+
+        <div className="hidden md:block absolute bottom-0 w-64 lg:w-96 left-0">
+          <img src={DarkPatternSvg} alt="pattern" className="dark:hidden" />
+          <img src={LightsPatternSvg} alt="pattern" className="hidden dark:block" />
+        </div>
+
+        <div className="hidden md:block absolute top-0 w-64 lg:w-96 right-0">
+          <img src={DarkPatternSvg} alt="pattern" className="dark:hidden" />
+          <img src={LightsPatternSvg} alt="pattern" className="hidden dark:block" />
+        </div> 
+        
         <div className="self-start flex items-center">
           <TbHexagon3D size={40} className="mr-1" />
           <h1 className="text-3xl font-bold">Nexio</h1>

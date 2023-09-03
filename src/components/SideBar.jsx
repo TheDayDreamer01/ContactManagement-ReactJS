@@ -1,13 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useContext } from "react";
 import { BiX } from "react-icons/bi";
 import { TbHexagon3D } from "react-icons/tb";
 import { motion } from "framer-motion";
-import { Context } from "../pages/Dashboard";
 
-export const SideBar = ({ children }) => {
-  const [showNavBar, setShowNavBar] = useContext(Context);
-
+export const SideBar = ({ children, showNavBar, onSetShowNavBar}) => {
   return (
     <>
       <motion.div
@@ -16,7 +12,7 @@ export const SideBar = ({ children }) => {
         className={`${
           showNavBar ? "block" : "hidden"
         } absolute h-screen w-screen bg-[#0000006f] top-0 z-10`}
-        onClick={() => setShowNavBar(!showNavBar)}
+        onClick={onSetShowNavBar}
       ></motion.div>
 
       <nav
@@ -38,7 +34,7 @@ export const SideBar = ({ children }) => {
           className={`${
             showNavBar ? "-right-14" : "right-0"
           } absolute  top-4 text-black p-2 rounded-full bg-neutral-200  transition-all ease delay-100 hover:bg-neutral-300 md:hidden`}
-          onClick={() => setShowNavBar(!showNavBar)}
+          onClick={onSetShowNavBar}
         >
           <BiX size={26} />
         </button>
