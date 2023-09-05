@@ -2,11 +2,14 @@
 // eslint-disable-next-line no-unused-vars
 import { BsStar, BsStarFill, BsThreeDots } from "react-icons/bs";
 import { BiBlock } from "react-icons/bi";
+import { MdDeleteForever } from "react-icons/md";
 import { useState } from "react";
 import {
   UpdateUserContactProperty,
   DeleteUserContact,
 } from "../../services/contactService.js";
+import ModalBox from "../ModalBox.jsx";
+import { SuccessToasts } from "../Toasts.jsx";
 
 export const ContactItem = ({
   id,
@@ -69,18 +72,21 @@ const ContactItemFavorite = ({ id, token, favorite }) => {
         path: "/isFavorite",
         op: "replace",
         value: !isFavorite,
-      },
+      },  
     ]);
     setIsFavorite((prev) => !prev);
+    window.location.reload();
   };
   return (
-    <button onClick={updateUserContactProperty}>
-      {isFavorite ? (
-        <BsStarFill size={26} className="text-amber-300" />
-      ) : (
-        <BsStar size={26} />
-      )}
-    </button>
+    <>
+      <button onClick={updateUserContactProperty}>
+        {isFavorite ? (
+          <BsStarFill size={26} className="text-amber-300" />
+        ) : (
+          <BsStar size={26} />
+        )}
+      </button>
+    </>
   );
 };
 
@@ -96,7 +102,9 @@ const ContactItemBlock = ({ id, token, block }) => {
       },
     ]);
     setIsBlock((prev) => !prev);
+    window.location.reload();
   };
+
   return (
     <button onClick={updateUserContactProperty}>
       {isBlock ? (
@@ -109,6 +117,9 @@ const ContactItemBlock = ({ id, token, block }) => {
 };
 
 const ContactItemGeneral = ({ id, token }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isBlock, setIsBlock] = useState(false);
+  const [isRemove, setIsRemove] = useState(false);
   const onChangeFavorite = async () => {
     await UpdateUserContactProperty(token, id, [
       {
@@ -117,16 +128,23 @@ const ContactItemGeneral = ({ id, token }) => {
         value: true,
       },
     ]);
+    setIsFavorite(true);
   };
 
   const onChangeBlock = async () => {
     await UpdateUserContactProperty(token, id, [
+      {
+        path: "/isFavorite",
+        op: "replace",
+        value: false,
+      },
       {
         path: "/isBlock",
         op: "replace",
         value: true,
       },
     ]);
+    window.location.reload();
   };
 
   const onChangeDelete = async () => {
@@ -135,33 +153,63 @@ const ContactItemGeneral = ({ id, token }) => {
   };
 
   return (
-    <div className="rounded-full hover:bg-neutral-200 p-2 group">
-      <BsThreeDots size={26} />
-      <div className="relative hidden group-hover:block">
-        <div className="absolute -left-16 top-2 rounded-lg z-10 shadow-lg bg-white">
-          <div className="flex flex-col text-center text-md font-semibold">
-            <button
-              className="hover:bg-neutral-200 w-40 py-3"
-              onClick={onChangeFavorite}
-            >
-              Add to Favorite
-            </button>
-            <button
-              className="hover:bg-neutral-200 w-40 py-3"
-              onClick={onChangeBlock}
-            >
-              Block Contact
-            </button>
-            <button
-              className="hover:bg-neutral-200 w-40 py-3 text-red-500"
-              onClick={onChangeDelete}
-            >
-              Delete Contact
-            </button>
+    <>
+      {isFavorite && (
+        <SuccessToasts
+          isFavorite={isFavorite}
+          setIsFavorite={setIsFavorite}
+          message="Contact is Added to Favorites"
+        />
+      )}
+
+      {isBlock && (
+        <ModalBox
+          icon={<BiBlock size={80} />}
+          title="Block Contact"
+          message="Are you sure you want to block this Contact Person?"
+          onAccept={onChangeBlock}
+          onCancel={() => setIsBlock(false)}
+        />
+      )}
+
+      {isRemove && (
+        <ModalBox
+          icon={<MdDeleteForever size={80} />}
+          title="Delete Contact"
+          message="Are you sure you want to delete this Contact Person?"
+          onAccept={onChangeDelete}
+          onCancel={() => setIsRemove(false)}
+        />
+      )}
+
+      <div className="rounded-full hover:bg-neutral-200 p-2 group">
+        <BsThreeDots size={26} />
+        <div className="relative hidden group-hover:block">
+          <div className="absolute -left-16 top-2 rounded-lg z-10 shadow-lg bg-white">
+            <div className="flex flex-col text-center text-md font-semibold">
+              <button
+                className="hover:bg-neutral-200 w-40 py-3"
+                onClick={onChangeFavorite}
+              >
+                Add to Favorite
+              </button>
+              <button
+                className="hover:bg-neutral-200 w-40 py-3"
+                onClick={() => setIsBlock(true)}
+              >
+                Block Contact
+              </button>
+              <button
+                className="hover:bg-neutral-200 w-40 py-3 text-red-500"
+                onClick={() => setIsRemove(true)}
+              >
+                Delete Contact
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

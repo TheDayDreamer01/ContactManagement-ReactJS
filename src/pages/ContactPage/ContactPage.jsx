@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import DeviceSvg from "../../assets/svg/Device.svg";
 import ContactList from "../../components/contact/ContactList";
 import ContactDetail from "../../components/contact/ContactDetail";
+import WorldSvg from "../../assets/svg/World.svg";
 
 /**
  * ContactPage - A component for displaying a contact page with contact list and contact details.
@@ -42,6 +43,7 @@ const ContactPage = ({
         <div className="overflow-y-scroll h-full">
           <ContactList
             title="All Contacts"
+            emptyImage={WorldSvg}
             emptyTitle="No Available Contact"
             searchContact={searchContact}
             isAddContact={isAddContact}

@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContactHeader, ContactItem, ContactTitleHeader } from "./ContactItems";
 import { GetUserContacts } from "../../services/contactService.js";
-import WorldSvg from "../../assets/svg/World.svg";
 
 const ContactList = ({
   title,
+  emptyImage,
   emptyTitle,
   searchContact,
   isAddContact,
@@ -37,6 +37,7 @@ const ContactList = ({
                 .includes(searchContact.toLowerCase());
             });
           }
+          filterlist = data.filter((element) => !element.isBlock); 
           
           if (isFavorite) {
             filterlist = data.filter((element) => element.isFavorite);
@@ -106,7 +107,7 @@ const ContactList = ({
         <div className="relative -top-32 h-full flex flex-col justify-center items-center p-4 gap-8">
           <img
             className="max-w-sm md:max-w-lg mx-auto"
-            src={WorldSvg}
+            src={emptyImage}
             alt="No Available Contacts"
           />
           <h1 className="text-lg md:text-2xl font-bold text-center dark:text-white">

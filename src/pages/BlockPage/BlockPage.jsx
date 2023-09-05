@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import DeviceSvg from "../../assets/svg/Device.svg";
 import ContactList from "../../components/contact/ContactList";
 import ContactDetail from "../../components/contact/ContactDetail";
+import BlockSvg from "../../assets/svg/Block.svg";
 
 /**
  * BlockPage - A component for displaying a block page with contact list and contact details.
@@ -30,6 +31,7 @@ const BlockPage = ({
         <div className="overflow-y-scroll h-full">
           <ContactList
             title="Favorite Contacts"
+            emptyImage={BlockSvg}
             emptyTitle="No Available Block Contact"
             searchContact={searchContact}
             isAddContact={isAddContact}
