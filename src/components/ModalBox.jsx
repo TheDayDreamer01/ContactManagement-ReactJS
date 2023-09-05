@@ -16,7 +16,7 @@ const ModalBox = ({ icon, title, message, onAccept, onCancel }) => {
     <motion.section
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="absolute bg-[#0000006f] h-screen w-screen z-40"
+      className="fixed top-0 left-0 bg-[#0000006f] h-screen w-screen z-40"
       onClick={onCancel}
     >
       <div className="flex justify-center items-center">
@@ -28,8 +28,8 @@ const ModalBox = ({ icon, title, message, onAccept, onCancel }) => {
           <div className="p-8 flex flex-col items-center justify-center h-full">
             <div className="flex-grow flex flex-col items-center justify-center gap-2 text-center mb-8">
               <div className="text-red-500 mt-2">{icon}</div>
-              <h1 className="text-2xl font-bold">{title}</h1>
-              <p className="text-sm text-neutral-600 max-w-[14rem] dark:text-neutral-200">
+              <h1 className="text-2xl font-bold not-italic text-black dark:text-white">{title}</h1>
+              <p className="text-sm text-neutral-600 max-w-[14rem] dark:text-neutral-200 not-italic">
                 {message}
               </p>
             </div>
