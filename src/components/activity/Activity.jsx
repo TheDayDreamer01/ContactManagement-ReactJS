@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ActivityHeader, ActivityItem } from "./ActivityItems";
+import { ActivityHeader, ActivityItem, ActivityTitleHeader } from "./ActivityItems";
 import ActivitySvg from "../../assets/svg/Activity.svg";
 
 /**
@@ -20,6 +20,7 @@ const Activity = () => {
   return (
     <>
       <ActivityHeader />
+      <ActivityTitleHeader />
       {activities.length !== 0 ? (
         // Display activities if there are any
         <>
