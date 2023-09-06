@@ -26,7 +26,7 @@ export const SuccessToasts = ({ message, isFavorite, setIsFavorite }) => {
         >
           <div className="fixed z-20 bottom-10 right-10">
             <div className="w-96 h-16 shadow-xl border-4 border-green-400 rounded-lg bg-green-100">
-              <div className="flex h-full items-center px-6 space-x-4">
+              <div className="flex h-full items-center px-6 space-x-4 text-black">
                 <BsFillCheckCircleFill size={22} />
                 <h1 className="text-lg font-semibold not-italic">{message}</h1>
               </div>
@@ -62,7 +62,7 @@ export const UnsuccessToasts = ({ message, isRemove, setIsRemove }) => {
             <div className="w-96 h-16 shadow-xl border-4 border-red-400 rounded-lg bg-red-100">
               <div className="flex h-full items-center px-6 space-x-4">
                 <TbCircleXFilled size={22} />
-                <h1 className="text-lg font-semibold not-italic">{message}</h1>
+                <h1 className="text-lg font-semibold not-italic text-black">{message}</h1>
               </div>
             </div>
           </div>

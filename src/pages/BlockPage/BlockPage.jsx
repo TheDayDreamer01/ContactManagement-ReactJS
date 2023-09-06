@@ -30,7 +30,7 @@ const BlockPage = ({
       <div className="h-full w-full rounded-lg shadow-md p-4 bg-white lg:block lg:w-1/2 xl:w-full dark:bg-neutral-700 relative">
         <div className="overflow-y-scroll h-full">
           <ContactList
-            title="Favorite Contacts"
+            title="Block Contacts"
             emptyImage={BlockSvg}
             emptyTitle="No Available Block Contact"
             searchContact={searchContact}

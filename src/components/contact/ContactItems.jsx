@@ -72,7 +72,7 @@ const ContactItemFavorite = ({ id, token, favorite }) => {
         path: "/isFavorite",
         op: "replace",
         value: !isFavorite,
-      },  
+      },
     ]);
     setIsFavorite((prev) => !prev);
     window.location.reload();
@@ -125,7 +125,12 @@ const ContactItemGeneral = ({ id, token }) => {
       {
         path: "/isFavorite",
         op: "replace",
-        value: true,
+        value: true, 
+      },
+      {
+        path: "/isBlock",
+        op: "replace",
+        value: false,
       },
     ]);
     setIsFavorite(true);
@@ -182,25 +187,25 @@ const ContactItemGeneral = ({ id, token }) => {
         />
       )}
 
-      <div className="rounded-full hover:bg-neutral-200 p-2 group">
+      <div className="rounded-full hover:bg-neutral-200  dark:hover:bg-neutral-800 p-2 group">
         <BsThreeDots size={26} />
         <div className="relative hidden group-hover:block">
-          <div className="absolute -left-16 top-2 rounded-lg z-10 shadow-lg bg-white">
+          <div className="absolute -left-16 top-3 rounded-lg z-10 shadow-lg bg-white dark:bg-neutral-800">
             <div className="flex flex-col text-center text-md font-semibold">
               <button
-                className="hover:bg-neutral-200 w-40 py-3"
+                className="hover:bg-neutral-200 w-40 py-3 rounded-t-lg dark:hover:bg-neutral-500"
                 onClick={onChangeFavorite}
               >
                 Add to Favorite
               </button>
               <button
-                className="hover:bg-neutral-200 w-40 py-3"
+                className="hover:bg-neutral-200 w-40 py-3 dark:hover:bg-neutral-500"
                 onClick={() => setIsBlock(true)}
               >
                 Block Contact
               </button>
               <button
-                className="hover:bg-neutral-200 w-40 py-3 text-red-500"
+                className="hover:bg-neutral-200 w-40 py-3 rounded-b-lg dark:hover:bg-neutral-500 text-red-500"
                 onClick={() => setIsRemove(true)}
               >
                 Delete Contact

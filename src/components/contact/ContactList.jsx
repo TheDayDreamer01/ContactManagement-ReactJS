@@ -21,7 +21,7 @@ const ContactList = ({
 
   useEffect(() => {
     const token = sessionStorage.getItem("token");
-  
+
     const getUserContactsAPI = async () => {
       try {
         const response = await GetUserContacts(token);
@@ -37,14 +37,15 @@ const ContactList = ({
                 .includes(searchContact.toLowerCase());
             });
           }
-          filterlist = data.filter((element) => !element.isBlock); 
-          
+
           if (isFavorite) {
-            filterlist = data.filter((element) => element.isFavorite);
+            filterlist = filterlist.filter((element) => element.isFavorite);
           }
 
           if (isBlock) {
-            filterlist = data.filter((element) => element.isBlock);
+            filterlist = filterlist.filter((element) => element.isBlock);
+          } else {
+            filterlist = filterlist.filter((element) => !element.isBlock);
           }
 
           filterlist.sort((a, b) => {
@@ -61,7 +62,6 @@ const ContactList = ({
           );
           setUniqueFirstLetters(uniqueLetters);
           setContactData(filterlist);
-
         } else if (response.status === 401) {
           sessionStorage.clear();
           navigation("/auth", { replace: true });
@@ -72,11 +72,18 @@ const ContactList = ({
     };
 
     getUserContactsAPI();
-  }, [isAddContact, isBlock, isEditContact, isFavorite, navigation, searchContact]);
+  }, [
+    isAddContact,
+    isBlock,
+    isEditContact,
+    isFavorite,
+    navigation,
+    searchContact,
+  ]);
 
   return (
     <>
-      <ContactHeader title={title}/>
+      <ContactHeader title={title} />
 
       {contactData.length > 0 ? (
         <>
@@ -96,7 +103,7 @@ const ContactList = ({
                       onContactView={() => onSetSelectedContact(element.id)}
                       favorite={element.isFavorite}
                       block={element.isBlock}
-                      currentItem={(isFavorite) ? 1 : (isBlock) ? 2 : 0}
+                      currentItem={isFavorite ? 1 : isBlock ? 2 : 0}
                     />
                   )
               )}
